@@ -1,55 +1,85 @@
 <?php
 
 /** @var yii\web\View $this */
-/** @var yii\bootstrap5\ActiveForm $form */
 
-/** @var app\models\LoginForm $model */
+use yii\widgets\ActiveForm;
 
-use yii\bootstrap5\ActiveForm;
-use yii\bootstrap5\Html;
+/** @var app\models\forms\LoginForm $model */
 
 $this->title = 'Login';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-login">
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>Please fill out the following fields to login:</p>
-
-    <div class="row">
-        <div class="col-lg-5">
-
-            <?php $form = ActiveForm::begin([
-                'id' => 'login-form',
-                'fieldConfig' => [
-                    'template' => "{label}\n{input}\n{error}",
-                    'labelOptions' => ['class' => 'col-lg-1 col-form-label mr-lg-3'],
-                    'inputOptions' => ['class' => 'col-lg-3 form-control'],
-                    'errorOptions' => ['class' => 'col-lg-7 invalid-feedback'],
-                ],
-            ]); ?>
-
-            <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
-
-            <?= $form->field($model, 'password')->passwordInput() ?>
-
-            <?= $form->field($model, 'rememberMe')->checkbox([
-                'template' => "<div class=\"custom-control custom-checkbox\">{input} {label}</div>\n<div class=\"col-lg-8\">{error}</div>",
-            ]) ?>
-
-            <div class="form-group">
-                <div>
-                    <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-                </div>
-            </div>
-
-            <?php ActiveForm::end(); ?>
-
-            <div style="color:#999;">
-                You may login with <strong>admin/admin</strong> or <strong>demo/demo</strong>.<br>
-                To modify the username/password, please check out the code <code>app\models\User::$users</code>.
-            </div>
-
-        </div>
+<main class="flex min-h-screen flex-col items-center justify-between px-24">
+    <div class="flex min-h-full flex-1 flex-col justify-center sm:mx-auto sm:w-full sm:max-w-sm px-6 py-12 lg:px-8">
+    <div class="flex flex-col sm:mx-auto sm:w-full sm:max-w-sm">
+        <img
+        class="mx-auto h-10 w-auto"
+        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+        alt="Your Company"
+        />
+        <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+        Sign in to your account
+        </h2>
     </div>
-</div>
+
+    <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        <?php
+        $form = ActiveForm::begin([
+            'id' => 'login-form',
+            'fieldConfig' => [
+                'template' => "{input}\n{error}",
+                'errorOptions' => ['class' => 'text-red'],
+            ],
+            'options' => [
+                'class' => 'space-y-6'
+            ]
+        ]);
+        ?>
+        <form class="space-y-6" method="POST">
+        <input type="hidden" name="<?= Yii::$app->request->csrfParam ?>" value="<?= Yii::$app->request->csrfToken ?>" />
+        <div>
+            <label for="email" class="block text-sm font-medium leading-6 text-gray-900">
+            Email address
+            </label>
+            <div class="mt-2">
+                <?= $form->field($model, 'username')->textInput([
+                    'class' => 'input-classic',
+                    'autoComplete' => 'email',
+                    'autofocus' => true,
+                    'required' => true
+                ]); ?>
+            </div>
+        </div>
+
+        <div>
+            <div class="flex items-center justify-between">
+            <label for="password" class="block text-sm font-medium leading-6 text-gray-900">
+                Password
+            </label>
+            <div class="text-sm">
+                <a href="#" class="font-semibold text-indigo-600 hover:text-indigo-500" tabindex="-1">
+                Forgot password?
+                </a>
+            </div>
+            </div>
+            <div class="mt-2">
+                <?= $form->field($model, 'password')->passwordInput([
+                    'class' => 'input-classic',
+                    'autoComplete' => 'current-password',
+                    'required' => true
+                ]); ?>
+            </div>
+        </div>
+
+        <div>
+            <button
+            type="submit"
+            class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 border-0"
+            >
+            Sign in
+            </button>
+        </div>
+        <?php ActiveForm::end(); ?>
+        </p>
+    </div>
+    </div>
+</main>
