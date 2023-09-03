@@ -33,11 +33,11 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             <span class="text-xl font-semibold">Admin Panel</span>
         </div>
         <ul class="py-4">
-            <li class="px-6 py-2 hover:bg-indigo-700 text-white">
-                <a href="/posts/list" class="block">Posts</a>
+            <li>
+                <a href="/admin/blogs/list" class="block px-6 py-2 hover:bg-indigo-700 text-white">Blogs</a>
             </li>
-            <li class="px-6 py-2 hover:bg-indigo-700 text-white">
-                <a href="/posts/create" class="block">Create post</a>
+            <li>
+                <a href="/admin/blogs/create" class="block px-6 py-2 hover:bg-indigo-700 text-white">Create blog</a>
             </li>
             <li class="nav-item">
             <?=
@@ -51,7 +51,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             </li>
         </ul>
     </nav>
-    <div class="container h-full">
+    <div class="container h-full p-4">
         <?php if (!empty($this->params['breadcrumbs'])): ?>
             <?= Breadcrumbs::widget(['links' => $this->params['breadcrumbs']]) ?>
         <?php endif ?>

@@ -3,7 +3,7 @@
 namespace app\models\databaseObjects;
 
 /**
- * This is the model class for table "user".
+ * This is the model class for table "blog".
  *
  * @property int $id
  * @property string $uuid
@@ -11,17 +11,19 @@ namespace app\models\databaseObjects;
  * @property string|null $description
  * @property string|null $keywords
  * @property string $user_id
+ * @property bool $is_published
  * @property string|null $creation_date
  * @property string|null $updation_date
+ * @property string|null $publish_date
  */
-class Post extends \yii\db\ActiveRecord
+class Blog extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'post';
+        return 'blog';
     }
 
     /**
@@ -31,12 +33,13 @@ class Post extends \yii\db\ActiveRecord
     {
         return [
             [['uuid', 'user_id', 'title'], 'required'],
-            [['uuid'], 'unique'],
-            [['uuid'], 'string', 'max' => 32],
+            ['uuid', 'unique'],
+            ['uuid', 'string', 'max' => 32],
+            ['is_published', 'boolean'],
             [['description', 'keywords', 'title'], 'string', 'max' => 100],
-            [['creation_date', 'updation_date'], 'safe'],
-            [['user_id'], 'integer'],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
+            [['creation_date', 'updation_date', 'publish_date'], 'safe'],
+            ['user_id', 'integer'],
+            ['user_id', 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 

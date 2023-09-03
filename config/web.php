@@ -49,6 +49,8 @@ $config = [
             'rules' => [
                 'login' => 'site/login',
                 'logout' => 'site/logout',
+
+                'admin/blogs/write/<uuid:\w+>' => 'admin/blogs/write'
             ],
         ],
        
