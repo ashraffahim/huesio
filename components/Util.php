@@ -4,6 +4,7 @@ namespace app\components;
 
 use app\models\exceptions\common\CannotGenerateUuidException;
 use Ramsey\Uuid\Uuid;
+use Yii;
 
 class Util {
     public static function generateUuid(string $model = null, string $field = 'uuid', int $maxIterations = 3) : string
@@ -24,6 +25,10 @@ class Util {
         } while($iterations < $maxIterations);
 
         throw new CannotGenerateUuidException();
+    }
+
+    public static function getAppName() {
+        return Yii::$app->params['name'];
     }
 }
 

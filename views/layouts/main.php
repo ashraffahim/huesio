@@ -4,6 +4,7 @@
 /** @var string $content */
 
 use app\assets\AppAsset;
+use app\components\Util;
 use app\widgets\Alert;
 use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
@@ -27,7 +28,21 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 <body>
 <?php $this->beginBody() ?>
 
-<header id="header">
+<header id="header" class="flex justify-center bg-white border-b border-gray-200">
+    <div class="container">
+        <div class="grid grid-cols-3 justify-between py-3 px-4">
+            <div class="brand">
+                <span class="text-2xl">Huesio</span>
+            </div>
+            <nav class="grid items-center justify-center">
+                <ul class="list-none whitespace-nowrap child:inline-block child:px-2">
+                    <li><a href="/health">Health</a></li>
+                    <li><a href="/beauty">Beauty</a></li>
+                </ul>
+            </nav>
+            <div class="account"></div>
+        </div>
+    </div>
 </header>
 
 <main id="main" class="flex-shrink-0" role="main">
@@ -40,11 +55,10 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     </div>
 </main>
 
-<footer id="footer" class="mt-auto py-3 bg-light">
+<footer id="footer" class="flex py-3 px-5">
     <div class="container">
-        <div class="row text-muted">
-            <div class="col-md-6 text-center text-md-start">&copy; My Company <?= date('Y') ?></div>
-            <div class="col-md-6 text-center text-md-end"><?= Yii::powered() ?></div>
+        <div class="text-gray-500">
+            <div class="w-full text-end">&copy; <?= Util::getAppName() . ' ' . date('Y') ?></div>
         </div>
     </div>
 </footer>

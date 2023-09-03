@@ -3,25 +3,25 @@
 /** @var yii\web\View $this */
 /** @var string $name */
 /** @var string $message */
-/** @var Exception$exception */
+/** @var \Exception $exception */
 
+use app\assets\AppAsset;
 use yii\helpers\Html;
+
+AppAsset::register($this);
 
 $this->title = $name;
 ?>
-<div class="site-error">
+<div class="p-10">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1 class="text-5xl"><?= Html::encode($this->title) ?></h1>
 
-    <div class="alert alert-danger">
+    <div class="text-red-900">
         <?= nl2br(Html::encode($message)) ?>
     </div>
 
     <p>
-        The above error occurred while the Web server was processing your request.
-    </p>
-    <p>
-        Please contact us if you think this is a server error. Thank you.
+        <a href="/">Go home</a>
     </p>
 
 </div>

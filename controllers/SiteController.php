@@ -71,12 +71,12 @@ class SiteController extends _MainController
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
-            return $this->goHome('/blogs/list');
+            return $this->goHome('/admin/blogs/list');
         }
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack('/blogs/list');
+            return $this->goBack('/admin/blogs/list');
         }
 
         $model->password = '';
