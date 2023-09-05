@@ -82,6 +82,26 @@ class StorageManager {
     }
 
     /**
+     * Get file content
+     * @param string $name
+     * @return string
+     */
+    public static function getFileContent(string $name)
+    {
+        $file = self::getFileResource($name);
+        
+        $content = '';
+        
+        while (!feof($file)) {
+            $content .= fread($file, self::READER_BUFFER_LENGTH);
+        }
+
+        self::closeFile($file);
+
+        return $content;
+    }
+
+    /**
      * Create directories if does not exist
      * @param string $paths
      */
@@ -89,6 +109,17 @@ class StorageManager {
         if (!is_dir($path)) {
             FileHelper::createDirectory(self::STORAGE_ROOT . $path, 0777, true);
         }
+    }
+
+    /**
+     * Blog content file exists
+     * @param string $uuid
+     * @return bool
+     */
+    public static function blogContentFileExists(string $uuid)
+    {
+        $path = StorageManager::getBlogContentFilePath($uuid);
+        return self::fileExists($path);
     }
 
     /**
@@ -113,6 +144,17 @@ class StorageManager {
         $path = self::getBlogContentFilePath($uuid);
 
         self::uploadFileContent($content, $path);
+    }
+
+    /**
+     * Get blog html file content
+     * @param string $uuid
+     * @return string
+     */
+    public static function getBlogContent(string $uuid) {
+        $path = self::getBlogContentFilePath($uuid);
+
+        return self::getFileContent($path);
     }
 }
 
