@@ -50,8 +50,7 @@ $config = [
                 'login' => 'site/login',
                 'logout' => 'site/logout',
 
-                'health/<uuid:\w+>' => 'blogs/read',
-                'health/<uuid:\w+>/<title:[\w-]+>' => 'blogs/read',
+                'health/<title:[\w-]+>' => 'blogs/read',
 
                 'admin/blogs/write/<uuid:\w+>' => 'admin/blogs/write'
             ],
