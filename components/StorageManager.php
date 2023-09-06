@@ -85,6 +85,7 @@ class StorageManager {
      * Get file content
      * @param string $name
      * @return string
+     * @throws FileDoesNotExistException
      */
     public static function getFileContent(string $name)
     {
@@ -150,6 +151,7 @@ class StorageManager {
      * Get blog html file content
      * @param string $uuid
      * @return string
+     * @throws FileDoesNotExistException
      */
     public static function getBlogContent(string $uuid) {
         $path = self::getBlogContentFilePath($uuid);

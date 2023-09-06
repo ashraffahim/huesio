@@ -24,8 +24,10 @@ class BlogsController extends _MainController {
             return $this->redirect('/health/' . $uuid . '/' . $formattedTitle);
         }
 
+        $this->layout = 'blog';
         return $this->render('read', [
-            'blog' => $blog
+            'blog' => $blog,
+            'urlSuffix' => $title,
         ]);
     }
 }
