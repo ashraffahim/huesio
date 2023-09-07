@@ -39,23 +39,56 @@ class BlogsController extends _MainController {
 
     public function actionCreate()
     {
+        $blog = new Blog();
+        $blog->uuid = Util::generateUuid(Blog::class);
+
         $model = new BlogForm();
+
+        $this->updateBlog($model, $blog);
+
+        return $this->render('create', ['model' => $model]);
+    }
+
+    public function actionEdit($uuid)
+    {
+        $blog = Blog::findOne(['uuid' => $uuid]);
+
+        if (is_null($blog)) {
+            throw new NotFoundHttpException();
+        }
+
+        $model = new BlogForm();
+
+        $this->updateBlog($model, $blog);
+
+        return $this->render('create', ['model' => $model]);
+    }
+
+    /**
+     * Create or edit blog
+     * @param BlogForm $model
+     * @param Blog $blog
+     */
+    public function updateBlog(BlogForm $model, Blog $blog)
+    {
+        $model->title = $blog->title;
+        $model->issue = \app\models\Issue::ISSUE_ID_TO_NAME[$blog->issue_id];
+        $model->description = $blog->description;
+        $model->keywords = $blog->keywords;
 
         if (Yii::$app->request->isPost) {
             $model->load(Yii::$app->request->post());
             
             if($model->validate()) {
-                
+                        
                 $transaction = Yii::$app->db->beginTransaction();
                 try {
-                    $blog = new Blog();
-                    $blog->uuid = Util::generateUuid(Blog::class);
                     $blog->title = $model->title;
                     $blog->description = $model->description;
                     $blog->keywords = $model->keywords;
                     $blog->creation_date = date('Y-m-d h:i:s');
                     $blog->user_id = Yii::$app->user->identity->id;
-    
+
                     if (!$blog->save()) {
                         throw new CannotSaveException($blog);
                     }
@@ -66,12 +99,11 @@ class BlogsController extends _MainController {
                     throw $e;
                 }
 
-                return $this->redirect('/blogs/write/' . $blog->uuid);
+                return $this->redirect('/admin/blogs/write/' . $blog->uuid);
 
             }
         }
 
-        return $this->render('create', ['model' => $model]);
     }
 
     public function actionWrite($uuid) {

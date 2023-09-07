@@ -24,7 +24,9 @@ if (empty($blogs)):
         <div class="p-1 border-2">
             <strong><?= $blog->id . '. ' . $blog->title ?></strong><br>
             <?= $blog->creation_date . ' - ' . $blog->updation_date ?>
-            <a href="/admin/blogs/write/<?= $blog->uuid ?>">Write</a>
+            <a href="/admin/blogs/edit/<?= $blog->uuid ?>">Edit</a>
+             • 
+            <a href="/admin/blogs/white/<?= $blog->uuid ?>">Write</a>
         </div>
     <?php endforeach; ?>
 </div>

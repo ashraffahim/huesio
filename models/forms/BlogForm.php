@@ -16,6 +16,7 @@ class BlogForm extends Model
     public $title;
     public $description;
     public $keywords;
+    public $issue;
 
     /**
      * @return array the validation rules.
@@ -25,6 +26,7 @@ class BlogForm extends Model
         return [
             [['title', 'description', 'keywords'], 'required'],
             [['title', 'description', 'keywords'], 'string', 'max' => 100],
+            ['issue', 'string'],
         ];
     }
 
@@ -35,6 +37,13 @@ class BlogForm extends Model
             'description' => 'Description',
             'keywords' => 'Keywords',
         ];
+    }
+
+    public function validateIssue($model, $attribute)
+    {
+        if (!in_array($model->$attribute, array_keys(\app\models\Issue::ISSUE_ID_TO_NAME))) {
+            $this->addError($attribute, 'Invalid issue');
+        }
     }
 
 }
