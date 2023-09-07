@@ -2,7 +2,11 @@
 module.exports = {
   content: ['./views/**/*.{php,js}'],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        roboto: ['Roboto']
+      }
+    },
   },
   plugins: [
     function ({ addVariant }) {

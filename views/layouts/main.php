@@ -25,7 +25,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
-<body class="h-full">
+<body class="h-full font-roboto">
 <?php $this->beginBody() ?>
 
 <header id="header" class="flex justify-center bg-white border-b border-gray-200">

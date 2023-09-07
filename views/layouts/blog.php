@@ -25,19 +25,19 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
-<body class="min-h-full">
+<body class="min-h-full font-roboto">
 <?php $this->beginBody() ?>
 
 <header id="header" class="flex justify-center bg-white border-b border-gray-200">
     <div class="xl:w-3/4 lg:w-3/4 md:w-5/6 sm:w-full mx-auto">
         <div class="grid grid-cols-3 justify-between py-3 px-4">
             <div class="brand relative">
-                <img src="<?= Yii::getAlias('@web/logo.png') ?>" alt="Huesio" class="absolute -top-3 h-12 w-12">
+                <img src="<?= Yii::getAlias('@web/logo.png') ?>" alt="Huesio" class="absolute -top-2 h-10">
             </div>
             <nav class="grid items-center justify-center">
                 <ul class="list-none whitespace-nowrap child:inline-block child:px-2">
-                    <li><a href="/health">Health</a></li>
-                    <li><a href="/beauty">Beauty</a></li>
+                    <li><a href="/health" class="uppercase hover:text-indigo-600 text-xs">Health</a></li>
+                    <li><a href="/beauty" class="uppercase hover:text-indigo-600 text-xs">Beauty</a></li>
                 </ul>
             </nav>
             <div class="account"></div>
