@@ -39,6 +39,9 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             <li>
                 <a href="/admin/blogs/create" class="block px-6 py-2 hover:bg-indigo-700 text-white">Create blog</a>
             </li>
+            <li>
+                <a href="/admin/blogs/files" class="block px-6 py-2 hover:bg-indigo-700 text-white">Files</a>
+            </li>
             <li class="nav-item">
             <?=
                 Html::beginForm(['/site/logout'])
@@ -58,15 +61,6 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         <?= $content ?>
     </div>
 </main>
-
-<footer id="footer" class="mt-auto py-3 bg-light">
-    <div class="container">
-        <div class="row text-muted">
-            <div class="col-md-6 text-center text-md-start">&copy; My Company <?= date('Y') ?></div>
-            <div class="col-md-6 text-center text-md-end"><?= Yii::powered() ?></div>
-        </div>
-    </div>
-</footer>
 
 <?php $this->endBody() ?>
 </body>
