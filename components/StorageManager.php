@@ -2,6 +2,7 @@
 
 namespace app\components;
 
+use app\models\exceptions\common\CannotDeleteFileException;
 use app\models\exceptions\common\CannotUploadFileException;
 use app\models\exceptions\common\FileDoesNotExistException;
 use yii\helpers\FileHelper;
@@ -10,22 +11,27 @@ class StorageManager {
     private const STORAGE_ROOT = __DIR__ . '/../../huesio_storage/';
 
     private const BLOG_CONTENT = 'blog_content/';
+    private const MEDIA = 'media/';
 
     public const READER_BUFFER_LENGTH = 512;
 
     /**
      * Upload file to storage
-     * @param string|resource|StreamInterface|null $content
-     * @param string $name
+     * @param string $source
+     * @param string $destination
      * @throws CannotUploadFileException
      */
-    public static function uploadFile($content, string $name) {
-        $file = fopen(self::STORAGE_ROOT . $name, 'w');
+    public static function uploadFile(string $source, string $destination) {
+        $file = fopen(self::STORAGE_ROOT . $destination, 'w');
 
         if ($file === false) throw new CannotUploadFileException();
+
+        $content = fopen($source, 'r');
+
+        if ($content === false) throw new CannotUploadFileException();
         
         while (!feof($content)) {
-            if (fwrite($file, fread($content, 512)) === false) throw new CannotUploadFileException();
+            if (fwrite($file, fread($content, self::READER_BUFFER_LENGTH)) === false) throw new CannotUploadFileException();
         }
 
         if (fclose($file) === false) throw new CannotUploadFileException();
@@ -33,12 +39,12 @@ class StorageManager {
 
     /**
      * Upload content as file to storage
-     * @param string|resource|StreamInterface|null $content
-     * @param string $name
+     * @param string $content
+     * @param string $destination
      * @throws CannotUploadFileException
      */
-    public static function uploadFileContent($content, string $name) {
-        $file = fopen(self::STORAGE_ROOT . $name, 'w');
+    public static function uploadFileContent($content, string $destination) {
+        $file = fopen(self::STORAGE_ROOT . $destination, 'w');
 
         if ($file === false) throw new CannotUploadFileException();
         
@@ -113,25 +119,28 @@ class StorageManager {
     }
 
     /**
-     * Blog content file exists
-     * @param string $uuid
-     * @return bool
-     */
-    public static function blogContentFileExists(string $uuid)
-    {
-        $path = StorageManager::getBlogContentFilePath($uuid);
-        return self::fileExists($path);
-    }
-
-    /**
      * Get blog content file path
      * @param string $uuid
      * @return string
      */
     public static function getBlogContentFilePath(string $uuid) {
-        $path = self::BLOG_CONTENT . $uuid;
+        $path = self::BLOG_CONTENT;
         self::createDirsIfDoesNotExist($path);
-        $path .= '/blog.html';
+        $path .= $uuid . '.html';
+
+        return $path;
+    }
+
+    /**
+     * Get media file path
+     * @param string $uuid
+     * @param string $extension
+     * @return string
+     */
+    public static function getMediaFilePath(string $uuid, string $extension) {
+        $path = self::MEDIA;
+        self::createDirsIfDoesNotExist($path);
+        $path .= $uuid . '.' . $extension;
 
         return $path;
     }
@@ -148,6 +157,19 @@ class StorageManager {
     }
 
     /**
+     * Upload media file to storage
+     * @param string $source
+     * @param string $uuid
+     * @param string $extension
+     * @throws CannotUploadFileException
+     */
+    public static function uploadMediaFile(string $source, string $uuid, string $extension) {
+        $path = self::getMediaFilePath($uuid, $extension);
+
+        self::uploadFile($source, $path);
+    }
+
+    /**
      * Get blog html file content
      * @param string $uuid
      * @return string
@@ -157,6 +179,27 @@ class StorageManager {
         $path = self::getBlogContentFilePath($uuid);
 
         return self::getFileContent($path);
+    }
+
+    /**
+     * Delete media file
+     * @param string $uuid
+     * @param string $extension
+     * @throws CannotDeleteFileException
+     */
+    public static function deleteMediaFile(string $uuid, string $extension) {
+        $path = self::getMediaFilePath($uuid, $extension);
+
+        if (self::fileExists($path)) {
+            if (!unlink($path)) {
+
+                \Yii::info([
+                    'path' => $path
+                ], 'media_file');
+
+                throw new CannotDeleteFileException();
+            }
+        }
     }
 }
 
