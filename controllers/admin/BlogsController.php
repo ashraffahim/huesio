@@ -72,7 +72,7 @@ class BlogsController extends _MainController {
     public function updateBlog(BlogForm $model, Blog $blog)
     {
         $model->title = $blog->title;
-        $model->issue = \app\models\Issue::ISSUE_ID_TO_NAME[$blog->issue_id];
+        $model->issue = \app\models\Issue::ISSUE_ID_TO_NAME[$blog->issue_id] ?? 1;
         $model->description = $blog->description;
         $model->keywords = $blog->keywords;
 
