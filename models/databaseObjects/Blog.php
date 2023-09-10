@@ -12,6 +12,7 @@ namespace app\models\databaseObjects;
  * @property string|null $issue_id
  * @property string|null $description
  * @property string|null $keywords
+ * @property int $image_id
  * @property string $user_id
  * @property bool $is_published
  * @property string|null $creation_date
@@ -19,6 +20,7 @@ namespace app\models\databaseObjects;
  * @property string|null $publish_date
  * 
  * @property User[] $user
+ * @property File $file
  * 
  */
 class Blog extends \yii\db\ActiveRecord
@@ -44,9 +46,10 @@ class Blog extends \yii\db\ActiveRecord
             ['is_published', 'boolean'],
             [['description', 'keywords', 'title', 'handle'], 'string', 'max' => 100],
             [['creation_date', 'updation_date', 'publish_date'], 'safe'],
-            [['user_id', 'issue_id'], 'integer'],
+            [['user_id', 'issue_id', 'image_id'], 'integer'],
             ['user_id', 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
             ['issue_id', 'exist', 'skipOnError' => true, 'targetClass' => Issue::class, 'targetAttribute' => ['issue_id' => 'id']],
+            ['image_id', 'exist', 'skipOnError' => true, 'targetClass' => File::class, 'targetAttribute' => ['image_id' => 'id']],
         ];
     }
 
@@ -63,6 +66,7 @@ class Blog extends \yii\db\ActiveRecord
             'issue_id' => 'Issue ID',
             'description' => 'Description',
             'keywords' => 'Keywords',
+            'image_id' => 'File Id',
             'user_id' => 'User Id',
             'creation_date' => 'Creation Date',
             'updation_date' => 'Updation Date',
@@ -77,5 +81,15 @@ class Blog extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::class, ['user_id' => 'id']);
+    }
+    
+    /**
+     * Gets query for [[File]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getFile()
+    {
+        return $this->hasOne(File::class, ['id' => 'image_id']);
     }
 }

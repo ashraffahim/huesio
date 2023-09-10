@@ -17,6 +17,10 @@ $this->params = [
         ],
         $this->title
     ],
+    'meta_url' => Yii::$app->params['baseUrl'] . 'health/' . $urlSuffix,
+    'meta_description' => $blog->description,
+    'meta_keywords' => $blog->keywords,
+    'meta_image' => Yii::$app->params['baseUrl'] . 'images/' . $blog->file->uuid . '.' . pathinfo($blog->file->name, PATHINFO_EXTENSION),
     'creation_date' => $blog->creation_date,
     'updation_date' => $blog->updation_date,
 ];

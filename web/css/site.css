@@ -570,6 +570,15 @@ video {
   }
 }
 
+.top-nav-brand-logo {
+  position: absolute;
+  top: -.5rem;
+  height: 2.5rem;
+  width: 5.8593rem;
+  background-image: url('https://huesio.ca/logo.png');
+  background-size: cover;
+}
+
 .absolute{
   position: absolute;
 }

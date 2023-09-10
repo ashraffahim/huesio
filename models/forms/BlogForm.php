@@ -18,6 +18,7 @@ class BlogForm extends Model
     public $description;
     public $keywords;
     public $issue;
+    public $image;
 
     /**
      * @return array the validation rules.
@@ -27,7 +28,7 @@ class BlogForm extends Model
         return [
             [['title', 'description', 'keywords', 'handle'], 'required'],
             [['title', 'description', 'keywords', 'handle'], 'string', 'max' => 100],
-            ['issue', 'string'],
+            [['issue', 'image'], 'string'],
             ['issue', 'validateIssue'],
             ['handle', 'validateHandle'],
         ];
@@ -40,6 +41,7 @@ class BlogForm extends Model
             'title' => 'Title',
             'description' => 'Description',
             'keywords' => 'Keywords',
+            'image' => 'Image UUID',
         ];
     }
 

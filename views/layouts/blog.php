@@ -5,7 +5,6 @@
 
 use app\assets\AppAsset;
 use app\components\Util;
-use app\widgets\Alert;
 use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
 
@@ -14,8 +13,12 @@ AppAsset::register($this);
 $this->registerCsrfMetaTags();
 $this->registerMetaTag(['charset' => Yii::$app->charset], 'charset');
 $this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, initial-scale=1, shrink-to-fit=no']);
-$this->registerMetaTag(['name' => 'description', 'content' => $this->params['meta_description'] ?? '']);
-$this->registerMetaTag(['name' => 'keywords', 'content' => $this->params['meta_keywords'] ?? '']);
+$this->registerMetaTag(['name' => 'description', 'content' => $this->params['meta_description']]);
+$this->registerMetaTag(['name' => 'keywords', 'content' => $this->params['meta_keywords']]);
+$this->registerMetaTag(['name' => 'og:title', 'content' => $this->title]);
+$this->registerMetaTag(['name' => 'og:url', 'content' => $this->params['meta_url']]);
+$this->registerMetaTag(['name' => 'og:description', 'content' => $this->params['meta_description']]);
+$this->registerMetaTag(['name' => 'og:image', 'content' => $this->params['meta_image']]);
 $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii::getAlias('@web/favicon.ico')]);
 ?>
 <?php $this->beginPage() ?>
@@ -32,12 +35,11 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     <div class="xl:w-3/4 lg:w-3/4 md:w-5/6 sm:w-full mx-auto">
         <div class="grid grid-cols-3 justify-between py-3 px-4">
             <div class="brand relative">
-                <img src="<?= Yii::getAlias('@web/logo.png') ?>" alt="Huesio" class="absolute -top-2 h-10">
+                <div class="top-nav-brand-logo"></div>
             </div>
             <nav class="grid items-center justify-center">
                 <ul class="list-none whitespace-nowrap child:inline-block child:px-2">
                     <li><a href="/health" class="uppercase hover:text-indigo-600 text-xs">Health</a></li>
-                    <li><a href="/beauty" class="uppercase hover:text-indigo-600 text-xs">Beauty</a></li>
                 </ul>
             </nav>
             <div class="account"></div>

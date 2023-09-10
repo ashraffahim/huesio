@@ -26,6 +26,9 @@ $this->title = 'Create blog';
             <?= $form->field($model, 'issue')->dropDownList(array_combine(app\models\Issue::ISSUE_ID_TO_NAME, app\models\Issue::ISSUE_ID_TO_NAME)); ?>
         </div>
         <div class="mb-3">
+            <?= $form->field($model, 'image'); ?>
+        </div>
+        <div class="mb-3">
             <?= $form->field($model, 'description'); ?>
         </div>
         <div class="mb-3">

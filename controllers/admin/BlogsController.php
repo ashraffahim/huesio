@@ -79,9 +79,16 @@ class BlogsController extends _MainController {
         $model->issue = \app\models\Issue::ISSUE_ID_TO_NAME[$blog->issue_id] ?? 1;
         $model->description = $blog->description;
         $model->keywords = $blog->keywords;
+        $model->image = !is_null($blog->image_id) ? $blog->file->uuid : null;
 
         if (Yii::$app->request->isPost) {
             $model->load(Yii::$app->request->post());
+
+            $image = File::findOne(['uuid' => $model->image]);
+
+            if (!is_null($image)) {
+                $blog->image_id = $image->id;
+            }
             
             if($model->validate()) {
                         
