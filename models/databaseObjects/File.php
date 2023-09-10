@@ -29,7 +29,7 @@ class File extends \yii\db\ActiveRecord
         return [
             [['uuid'], 'required'],
             [['uuid'], 'string', 'max' => 32],
-            [['name'], 'string', 'max' => 30],
+            [['name'], 'string', 'max' => 100],
         ];
     }
 

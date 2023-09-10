@@ -151,7 +151,7 @@ class BlogsController extends _MainController {
         
         if (Yii::$app->request->isPost) {
             foreach ($uploadedFiles as $uploadedFile) {
-                if (mb_strlen($uploadedFile->baseName) > 30) {
+                if (mb_strlen($uploadedFile->baseName) > 100) {
                     $errors[] = 'Name cannot be more than 30 characters';
                     break;
                 }
