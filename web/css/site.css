@@ -1018,6 +1018,8 @@ video {
 }
 
 .btn-classic{
+  display: inline-block;
+  cursor: pointer;
   border-radius: 0.375rem;
   border-width: 0px;
   --tw-bg-opacity: 1;
