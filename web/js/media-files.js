@@ -36,7 +36,7 @@ $('#media-files-form').on('submit', async function(e) {
             throw new Error(await response.text());
         }
 
-        // window.location.reload();
+        window.location.reload();
     } catch(e) {
         console.log(e);
     }
