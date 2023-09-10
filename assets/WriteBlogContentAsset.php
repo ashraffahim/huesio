@@ -21,7 +21,7 @@ class WriteBlogContentAsset extends AssetBundle
     public $baseUrl = '@web';
 
     public $js = [
-        'js/write-blog-content.js'
+        'js/write-blog-content.js?v=123456789'
     ];
     
     public $jsOptions = ['position' => \yii\web\View::POS_END];
