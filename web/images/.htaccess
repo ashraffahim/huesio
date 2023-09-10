@@ -1,2 +1,2 @@
 RewriteEngine on
-RewriteRule (.*\.png) index.php?q=$1 [L]
+RewriteRule . index.php [L]
