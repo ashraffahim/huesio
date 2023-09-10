@@ -122,7 +122,7 @@ class BlogsController extends _MainController {
     
                 if (is_null($content)) throw new InvalidArgumentException('Blog content cannot be empty');
     
-                StorageManager::uploadBlogContent(nl2br(Yii::$app->request->post('content')), $uuid);
+                StorageManager::uploadBlogContent(Yii::$app->request->post('content'), $uuid);
             } catch(\Exception $e) {
                 $errors[] = $e->getMessage();
             }

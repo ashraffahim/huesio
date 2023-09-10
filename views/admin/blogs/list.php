@@ -26,7 +26,7 @@ if (empty($blogs)):
             <?= $blog->creation_date . ' - ' . $blog->updation_date ?>
             <a href="/admin/blogs/edit/<?= $blog->uuid ?>">Edit</a>
              • 
-            <a href="/admin/blogs/white/<?= $blog->uuid ?>">Write</a>
+            <a href="/admin/blogs/write/<?= $blog->uuid ?>">Write</a>
         </div>
     <?php endforeach; ?>
 </div>
