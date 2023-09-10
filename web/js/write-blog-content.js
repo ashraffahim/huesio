@@ -35,13 +35,13 @@ const textToHtml = (text) => {
         html += line.replaceAll(/\(img:(.+)\)\[(http(?:s|):\/\/.+)\]/ig, '<img src="$2" alt="$1">')
         .replaceAll(/\*(.+)\*/ig, '<b>$1</b>')
         .replaceAll(/_(.+)_/ig, '<i>$1</i>')
-        .replaceAll(/\((.+)\)\[(http(?:s|):\/\/.+)\]/ig, '<a href="$2">$1</a>') + "\n";
+        .replaceAll(/\((.+)\)\[(http(?:s|):\/\/.+)\]/ig, '<a href="$2">$1</a>') + "<br />";
     });
     return html;
 }
 
 const htmlToText = (html) => {
-    const lines = html.split("\n");
+    const lines = html.split("<br />");
     let text = '';
     lines.forEach(line => {
         text += line.replaceAll(/\<img.+src="(http(?:s|):\/\/.+)".+alt="(.+)"\>/ig, '(img:$2)[$1]')
