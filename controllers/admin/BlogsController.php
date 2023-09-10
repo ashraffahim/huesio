@@ -61,6 +61,7 @@ class BlogsController extends _MainController {
 
         $model = new BlogForm();
 
+        $blog->updation_date = date('Y-m-d h:i:s');
         $this->updateBlog($model, $blog);
 
         return $this->render('create', ['model' => $model]);
