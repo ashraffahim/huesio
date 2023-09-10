@@ -74,6 +74,7 @@ class BlogsController extends _MainController {
      */
     public function updateBlog(BlogForm $model, Blog $blog)
     {
+        $model->handle = $blog->handle;
         $model->title = $blog->title;
         $model->issue = \app\models\Issue::ISSUE_ID_TO_NAME[$blog->issue_id] ?? 1;
         $model->description = $blog->description;
@@ -86,6 +87,7 @@ class BlogsController extends _MainController {
                         
                 $transaction = Yii::$app->db->beginTransaction();
                 try {
+                    $blog->handle = $model->handle;
                     $blog->title = $model->title;
                     $blog->description = $model->description;
                     $blog->keywords = $model->keywords;

@@ -6,13 +6,13 @@ use app\models\databaseObjects\Blog;
 use yii\web\NotFoundHttpException;
 
 class BlogsController extends _MainController {
-    public function actionRead($title = null)
+    public function actionRead($handle = null)
     {
-        if (is_null($title)) {
+        if (is_null($handle)) {
             throw new NotFoundHttpException();
         }
 
-        $blog = Blog::findOne(['title' => str_replace('-', ' ', $title)]);
+        $blog = Blog::findOne(['handle' => $handle]);
 
         if (is_null($blog)) {
             throw new NotFoundHttpException();
@@ -21,7 +21,7 @@ class BlogsController extends _MainController {
         $this->layout = 'blog';
         return $this->render('read', [
             'blog' => $blog,
-            'urlSuffix' => $title,
+            'urlSuffix' => $handle,
         ]);
     }
 }

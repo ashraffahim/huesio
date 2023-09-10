@@ -7,6 +7,7 @@ namespace app\models\databaseObjects;
  *
  * @property int $id
  * @property string $uuid
+ * @property string|null $handle
  * @property string|null $title
  * @property string|null $issue_id
  * @property string|null $description
@@ -36,11 +37,12 @@ class Blog extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['uuid', 'user_id', 'title'], 'required'],
+            [['uuid', 'user_id', 'title', 'handle'], 'required'],
             ['uuid', 'unique'],
+            ['handle', 'unique'],
             ['uuid', 'string', 'max' => 32],
             ['is_published', 'boolean'],
-            [['description', 'keywords', 'title'], 'string', 'max' => 100],
+            [['description', 'keywords', 'title', 'handle'], 'string', 'max' => 100],
             [['creation_date', 'updation_date', 'publish_date'], 'safe'],
             [['user_id', 'issue_id'], 'integer'],
             ['user_id', 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
@@ -56,6 +58,7 @@ class Blog extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'uuid' => 'Uuid',
+            'handle' => 'Handle',
             'title' => 'Title',
             'issue_id' => 'Issue ID',
             'description' => 'Description',

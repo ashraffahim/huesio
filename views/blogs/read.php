@@ -5,6 +5,7 @@
 use app\components\StorageManager;
 
 /** @var app\models\databaseObjects\Blog $blog */
+/** @var strinf $urlSuffix */
 
 $this->title = $blog->title;
 
@@ -21,6 +22,6 @@ $this->params = [
 ];
 ?>
 
-<div class="">
+<div class="blog-read">
     <?= StorageManager::getBlogContent($blog->uuid) ?>
 </div>

@@ -17,6 +17,9 @@ $this->title = 'Create blog';
         ]);
         ?>
         <div class="mb-3">
+            <?= $form->field($model, 'handle'); ?>
+        </div>
+        <div class="mb-3">
             <?= $form->field($model, 'title'); ?>
         </div>
         <div class="mb-3">
