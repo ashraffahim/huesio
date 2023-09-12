@@ -32,7 +32,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     <div class="container">
         <div class="grid grid-cols-3 justify-between py-3 px-4">
             <div class="brand relative">
-                <img src="<?= Yii::getAlias('@web/logo.png') ?>" alt="Huesio" class="absolute -top-2 h-10">
+                <div class="top-nav-brand-logo"></div>
             </div>
             <nav class="grid items-center justify-center">
                 <ul class="list-none whitespace-nowrap child:inline-block child:px-2">
