@@ -20,6 +20,7 @@ $this->registerMetaTag(['name' => 'og:url', 'content' => $this->params['meta_url
 $this->registerMetaTag(['name' => 'og:description', 'content' => $this->params['meta_description']]);
 $this->registerMetaTag(['name' => 'og:image', 'content' => $this->params['meta_image']]);
 $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii::getAlias('@web/favicon.ico')]);
+$this->registerLinkTag(['rel' => 'canonical', 'href' => $this->params['meta_url']]);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
