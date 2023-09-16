@@ -16,6 +16,7 @@ use yii\web\UploadedFile;
 class BlogsController extends _MainController {
     public function beforeAction($action)
     {
+        Yii::$app->response->headers->add('X-Robots-Tag', 'noindex');
         $this->layout = 'admin';
         return parent::beforeAction($action);
     }

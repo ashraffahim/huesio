@@ -25,7 +25,7 @@ $this->params = [
 ];
 
 if (!is_null($blog->image_id)) {
-    $this->params['meta_image'] = Yii::$app->params['cdnBaseUrl'] . $blog->file->uuid . '.' . pathinfo($blog->file->name, PATHINFO_EXTENSION);
+    $this->params['meta_image'] = Yii::$app->params['imgCdnBaseUrl'] . $blog->file->uuid . '.' . pathinfo($blog->file->name, PATHINFO_EXTENSION);
 } else {
     $this->params['meta_image'] = Yii::$app->params['appBaseUrl'] . 'logo.png';
 }

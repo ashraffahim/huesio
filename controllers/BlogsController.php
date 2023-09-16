@@ -5,13 +5,21 @@ namespace app\controllers;
 use app\models\databaseObjects\Blog;
 use yii\web\NotFoundHttpException;
 
-class BlogsController extends _MainController {
-    public function actionRead($handle = null)
-    {
+class BlogsController extends _MainController {    
+    public function actionHealth($handle = null) {
         if (is_null($handle)) {
-            throw new NotFoundHttpException();
+            $blogs = Blog::find()->orderBy(['id' => SORT_DESC])->limit(10)->all();
+
+            return $this->render('home', [
+                'blogs' => $blogs
+            ]);
         }
 
+        return $this->actionRead($handle);
+    }
+
+    public function actionRead($handle)
+    {
         $blog = Blog::findOne(['handle' => $handle]);
 
         if (is_null($blog)) {
@@ -24,6 +32,7 @@ class BlogsController extends _MainController {
             'urlSuffix' => $handle,
         ]);
     }
+
 }
 
 ?>

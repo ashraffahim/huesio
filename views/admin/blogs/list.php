@@ -27,6 +27,8 @@ if (empty($blogs)):
             <a href="/admin/blogs/edit/<?= $blog->uuid ?>">Edit</a>
              • 
             <a href="/admin/blogs/write/<?= $blog->uuid ?>">Write</a>
+             • 
+            <a href="/health/<?= $blog->handle ?>" target="_blank">Read</a>
         </div>
     <?php endforeach; ?>
 </div>
