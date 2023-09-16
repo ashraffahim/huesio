@@ -6,16 +6,12 @@ use app\models\databaseObjects\Blog;
 use yii\web\NotFoundHttpException;
 
 class BlogsController extends _MainController {    
-    public function actionHealth($handle = null) {
-        if (is_null($handle)) {
-            $blogs = Blog::find()->orderBy(['id' => SORT_DESC])->limit(10)->all();
+    public function actionHealth() {
+        $blogs = Blog::find()->orderBy(['id' => SORT_DESC])->limit(10)->all();
 
-            return $this->render('home', [
-                'blogs' => $blogs
-            ]);
-        }
-
-        return $this->actionRead($handle);
+        return $this->render('home', [
+            'blogs' => $blogs
+        ]);
     }
 
     public function actionRead($handle)
