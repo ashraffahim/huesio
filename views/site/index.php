@@ -1,51 +1,81 @@
 <?php
 
 /** @var yii\web\View $this */
+/** @var app\models\databaseObjects\Blog[] $blogs */
 
-$this->title = 'My Yii Application';
+$this->title = 'Huesio - Home';
+$hrefPrefix = Yii::$app->params['appBaseUrl'] . 'health/';
+$blogIndex = 0;
 ?>
-<div class="site-index">
 
-    <div class="jumbotron text-center bg-transparent mt-5 mb-5">
-        <h1 class="display-4">Congratulations!</h1>
+<div class="blog-home">
+    <div class="flex px-1 lg:px-8 md:px-4">
 
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="https://www.yiiframework.com">Get started with Yii</a></p>
-    </div>
-
-    <div class="body-content">
-
-        <div class="row">
-            <div class="col-lg-4 mb-3">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-outline-secondary" href="https://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
+        <div class="w-full lg:w-1/2 md:w-1/2 pr-0 lg:pr-2 md:pr-2">
+            <div class="w-full">
+                <a href="<?= $hrefPrefix . $blogs[$blogIndex]->handle ?>">
+                    <h4 class="text-3xl text-center p-3"><?= $blogs[$blogIndex]->title ?></h4>
+                    <img src="<?= Yii::$app->params['imgCdnBaseUrl'] . $blogs[$blogIndex]->file->uuid . '.' . pathinfo($blogs[$blogIndex]->file->name, PATHINFO_EXTENSION) ?>" alt="<?= $blogs[$blogIndex]->title ?>">
+                    <h6 class="text-base p-3"><?= $blogs[$blogIndex]->description ?></h6>
+                    <?php $blogIndex++; ?>
+                </a>
             </div>
-            <div class="col-lg-4 mb-3">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-outline-secondary" href="https://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
+            <div class="flex">
+                <div class="w-1/2">
+                    <a href="<?= $hrefPrefix . $blogs[$blogIndex]->handle ?>">
+                        <img src="<?= Yii::$app->params['imgCdnBaseUrl'] . $blogs[$blogIndex]->file->uuid . '.' . pathinfo($blogs[$blogIndex]->file->name, PATHINFO_EXTENSION) ?>" alt="<?= $blogs[$blogIndex]->title ?>">
+                        <h4 class="text-xl px-3 pt-3"><?= $blogs[$blogIndex]->title ?></h4>
+                        <h6 class="text-base px-3 pb-3"><?= $blogs[$blogIndex]->description ?></h6>
+                        <?php $blogIndex++; ?>
+                    </a>
+                </div>
+                <div class="w-1/2">
+                    <a href="<?= $hrefPrefix . $blogs[$blogIndex]->handle ?>">
+                        <img src="<?= Yii::$app->params['imgCdnBaseUrl'] . $blogs[$blogIndex]->file->uuid . '.' . pathinfo($blogs[$blogIndex]->file->name, PATHINFO_EXTENSION) ?>" alt="<?= $blogs[$blogIndex]->title ?>">
+                        <h4 class="text-xl px-3 pt-3"><?= $blogs[$blogIndex]->title ?></h4>
+                        <h6 class="text-base px-3 pb-3"><?= $blogs[$blogIndex]->description ?></h6>
+                        <?php $blogIndex++; ?>
+                    </a>
+                </div>
             </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
+        </div>
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-outline-secondary" href="https://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
+        <div class="flex w-full lg:w-1/2 md:w-1/2 pl-0 lg:pl-2 md:pl-2">
+            <div class="w-full lg:w-1/2 md:w-1/2">
+                <div class="w-full">
+                    <a href="<?= $hrefPrefix . $blogs[$blogIndex]->handle ?>">
+                        <img src="<?= Yii::$app->params['imgCdnBaseUrl'] . $blogs[$blogIndex]->file->uuid . '.' . pathinfo($blogs[$blogIndex]->file->name, PATHINFO_EXTENSION) ?>" alt="<?= $blogs[$blogIndex]->title ?>">
+                        <h4 class="text-xl px-3 pt-3"><?= $blogs[$blogIndex]->title ?></h4>
+                        <h6 class="text-base px-3 pb-3"><?= $blogs[$blogIndex]->description ?></h6>
+                        <?php $blogIndex++; ?>
+                    </a>
+                </div>
+                <div class="w-full">
+                    <a href="<?= $hrefPrefix . $blogs[$blogIndex]->handle ?>">
+                        <img src="<?= Yii::$app->params['imgCdnBaseUrl'] . $blogs[$blogIndex]->file->uuid . '.' . pathinfo($blogs[$blogIndex]->file->name, PATHINFO_EXTENSION) ?>" alt="<?= $blogs[$blogIndex]->title ?>">
+                        <h4 class="text-xl px-3 pt-3"><?= $blogs[$blogIndex]->title ?></h4>
+                        <h6 class="text-base px-3 pb-3"><?= $blogs[$blogIndex]->description ?></h6>
+                        <?php $blogIndex++; ?>
+                    </a>
+                </div>
+            </div>
+            <div class="w-full lg:w-1/2 md:w-1/2">
+                <div class="w-full">
+                    <a href="<?= $hrefPrefix . $blogs[$blogIndex]->handle ?>">
+                        <img src="<?= Yii::$app->params['imgCdnBaseUrl'] . $blogs[$blogIndex]->file->uuid . '.' . pathinfo($blogs[$blogIndex]->file->name, PATHINFO_EXTENSION) ?>" alt="<?= $blogs[$blogIndex]->title ?>">
+                        <h4 class="text-xl px-3 pt-3"><?= $blogs[$blogIndex]->title ?></h4>
+                        <h6 class="text-base px-3 pb-3"><?= $blogs[$blogIndex]->description ?></h6>
+                        <?php $blogIndex++; ?>
+                    </a>
+                </div>
+                <div class="w-full">
+                    <a href="<?= $hrefPrefix . $blogs[$blogIndex]->handle ?>">
+                        <img src="<?= Yii::$app->params['imgCdnBaseUrl'] . $blogs[$blogIndex]->file->uuid . '.' . pathinfo($blogs[$blogIndex]->file->name, PATHINFO_EXTENSION) ?>" alt="<?= $blogs[$blogIndex]->title ?>">
+                        <h4 class="text-xl px-3 pt-3"><?= $blogs[$blogIndex]->title ?></h4>
+                        <h6 class="text-base px-3 pb-3"><?= $blogs[$blogIndex]->description ?></h6>
+                        <?php $blogIndex++; ?>
+                    </a>
+                </div>
             </div>
         </div>
 

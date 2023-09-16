@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\databaseObjects\Blog;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -60,7 +61,11 @@ class SiteController extends _MainController
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $blogs = Blog::find()->orderBy(['id' => SORT_DESC])->limit(10)->all();
+
+        return $this->render('index', [
+            'blogs' => $blogs
+        ]);
     }
 
     /**
