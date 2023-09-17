@@ -27,6 +27,15 @@ $this->registerLinkTag(['rel' => 'canonical', 'href' => Yii::$app->params['appBa
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>" class="h-full">
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y91DY88F5B"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-Y91DY88F5B');
+    </script>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
