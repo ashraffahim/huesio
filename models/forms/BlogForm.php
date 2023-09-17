@@ -27,7 +27,8 @@ class BlogForm extends Model
     {
         return [
             [['title', 'description', 'keywords', 'handle'], 'required'],
-            [['title', 'description', 'keywords', 'handle'], 'string', 'max' => 100],
+            [['title', 'keywords', 'handle'], 'string', 'max' => 100],
+            ['description', 'string', 'max' => 255],
             [['issue', 'image'], 'string'],
             ['issue', 'validateIssue'],
             ['handle', 'validateHandle'],
