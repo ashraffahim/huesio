@@ -25,7 +25,7 @@ $this->registerLinkTag(['rel' => 'canonical', 'href' => Yii::$app->params['appBa
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
-<html lang="<?= Yii::$app->language ?>" class="h-full">
+<html lang="<?= Yii::$app->language ?>" class="min-h-full">
 <head>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y91DY88F5B"></script>
