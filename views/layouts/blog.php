@@ -35,6 +35,8 @@ $this->registerLinkTag(['rel' => 'canonical', 'href' => $this->params['meta_url'
 
         gtag('config', 'G-Y91DY88F5B');
     </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1458829588848469"
+     crossorigin="anonymous"></script>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>

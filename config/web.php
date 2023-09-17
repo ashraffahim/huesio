@@ -54,7 +54,9 @@ $config = [
                 'health/<handle:[\w-]+>' => 'blogs/read',
 
                 'admin/blogs/edit/<uuid:\w+>' => 'admin/blogs/edit',
-                'admin/blogs/write/<uuid:\w+>' => 'admin/blogs/write'
+                'admin/blogs/write/<uuid:\w+>' => 'admin/blogs/write',
+
+                '<handle:[\w-]+>' => 'blogs/read'
             ],
         ],
        
