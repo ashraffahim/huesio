@@ -5,15 +5,15 @@ namespace app\controllers\admin;
 use app\components\StorageManager;
 use app\components\Util;
 use Yii;
-use app\models\databaseObjects\Blog;
+use app\models\databaseObjects\Article;
 use app\models\File;
 use app\models\exceptions\common\CannotSaveException;
-use app\models\forms\BlogForm;
+use app\models\forms\ArticleForm;
 use InvalidArgumentException;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
 
-class BlogsController extends _MainController {
+class ArticlesController extends _MainController {
     public function beforeAction($action)
     {
         Yii::$app->response->headers->add('X-Robots-Tag', 'noindex');
@@ -23,64 +23,64 @@ class BlogsController extends _MainController {
 
     public function actionIndex()
     {
-        return $this->redirect('/admin/blogs/list');
+        return $this->redirect('/admin/articles/list');
     }
 
     public function actionList()
     {
-        $blogs = Blog::find();
-        $blogsCount = $blogs->count();
+        $articles = Article::find();
+        $articlesCount = $articles->count();
         $page = Yii::$app->request->get('page', 0);
-        $blogs->limit(10)->offset($page);
+        $articles->limit(10)->offset($page);
 
         return $this->render('list', [
-            'blogs' => $blogs->all(),
-            'blogsCount' => $blogsCount,
+            'articles' => $articles->all(),
+            'articlesCount' => $articlesCount,
             'page' => $page,
         ]);
     }
 
     public function actionCreate()
     {
-        $blog = new Blog();
-        $blog->uuid = Util::generateUuid(Blog::class);
+        $article = new Article();
+        $article->uuid = Util::generateUuid(Article::class);
 
-        $model = new BlogForm();
+        $model = new ArticleForm();
 
-        $this->updateBlog($model, $blog);
+        $this->updateArticle($model, $article);
 
         return $this->render('create', ['model' => $model]);
     }
 
     public function actionEdit($uuid)
     {
-        $blog = Blog::findOne(['uuid' => $uuid]);
+        $article = Article::findOne(['uuid' => $uuid]);
 
-        if (is_null($blog)) {
+        if (is_null($article)) {
             throw new NotFoundHttpException();
         }
 
-        $model = new BlogForm();
+        $model = new ArticleForm();
 
-        $blog->updation_date = date('Y-m-d h:i:s');
-        $this->updateBlog($model, $blog);
+        $article->updation_date = date('Y-m-d h:i:s');
+        $this->updateArticle($model, $article);
 
         return $this->render('create', ['model' => $model]);
     }
 
     /**
-     * Create or edit blog
-     * @param BlogForm $model
-     * @param Blog $blog
+     * Create or edit article
+     * @param ArticleForm $model
+     * @param Article $article
      */
-    public function updateBlog(BlogForm $model, Blog $blog)
+    public function updateArticle(ArticleForm $model, Article $article)
     {
-        $model->handle = $blog->handle;
-        $model->title = $blog->title;
-        $model->issue = \app\models\Issue::ISSUE_ID_TO_NAME[$blog->issue_id] ?? 1;
-        $model->description = $blog->description;
-        $model->keywords = $blog->keywords;
-        $model->image = !is_null($blog->image_id) ? $blog->file->uuid : null;
+        $model->handle = $article->handle;
+        $model->title = $article->title;
+        $model->issue = \app\models\Issue::ISSUE_ID_TO_NAME[$article->issue_id] ?? 1;
+        $model->description = $article->description;
+        $model->keywords = $article->keywords;
+        $model->image = !is_null($article->image_id) ? $article->file->uuid : null;
 
         if (Yii::$app->request->isPost) {
             $model->load(Yii::$app->request->post());
@@ -88,22 +88,22 @@ class BlogsController extends _MainController {
             $image = File::findOne(['uuid' => $model->image]);
 
             if (!is_null($image)) {
-                $blog->image_id = $image->id;
+                $article->image_id = $image->id;
             }
             
             if($model->validate()) {
                         
                 $transaction = Yii::$app->db->beginTransaction();
                 try {
-                    $blog->handle = $model->handle;
-                    $blog->title = $model->title;
-                    $blog->description = $model->description;
-                    $blog->keywords = $model->keywords;
-                    $blog->creation_date = date('Y-m-d h:i:s');
-                    $blog->user_id = Yii::$app->user->identity->id;
+                    $article->handle = $model->handle;
+                    $article->title = $model->title;
+                    $article->description = $model->description;
+                    $article->keywords = $model->keywords;
+                    $article->creation_date = date('Y-m-d h:i:s');
+                    $article->user_id = Yii::$app->user->identity->id;
 
-                    if (!$blog->save()) {
-                        throw new CannotSaveException($blog);
+                    if (!$article->save()) {
+                        throw new CannotSaveException($article);
                     }
 
                     $transaction->commit();
@@ -112,7 +112,7 @@ class BlogsController extends _MainController {
                     throw $e;
                 }
 
-                return $this->redirect('/admin/blogs/write/' . $blog->uuid);
+                return $this->redirect('/admin/articles/write/' . $article->uuid);
 
             }
         }
@@ -121,9 +121,9 @@ class BlogsController extends _MainController {
 
     public function actionWrite($uuid) {
         $errors = [];
-        $blog = Blog::findOne(['uuid' => $uuid]);
+        $article = Article::findOne(['uuid' => $uuid]);
         
-        if (is_null($blog)) {
+        if (is_null($article)) {
             throw new NotFoundHttpException();
         }
 
@@ -131,16 +131,16 @@ class BlogsController extends _MainController {
             try {
                 $content = Yii::$app->request->post('content');
     
-                if (is_null($content)) throw new InvalidArgumentException('Blog content cannot be empty');
+                if (is_null($content)) throw new InvalidArgumentException('Article content cannot be empty');
     
-                StorageManager::uploadBlogContent(Yii::$app->request->post('content'), $uuid);
+                StorageManager::uploadArticleContent(Yii::$app->request->post('content'), $uuid);
             } catch(\Exception $e) {
                 $errors[] = $e->getMessage();
             }
         }
 
         return $this->render('write', [
-            'blog' => $blog,
+            'article' => $article,
             'errors' => $errors
         ]);
     }

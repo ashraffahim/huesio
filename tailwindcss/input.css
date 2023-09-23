@@ -47,6 +47,6 @@ ol {
     @apply inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white
 }
 
-.blog-read h3 {
+.article-read h3 {
     @apply text-2xl
 }

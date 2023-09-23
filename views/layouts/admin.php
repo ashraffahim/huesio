@@ -35,13 +35,13 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         </div>
         <ul class="py-4">
             <li>
-                <a href="/admin/blogs/list" class="block px-6 py-2 hover:bg-indigo-700 text-white">Blogs</a>
+                <a href="/admin/articles/list" class="block px-6 py-2 hover:bg-indigo-700 text-white">Articles</a>
             </li>
             <li>
-                <a href="/admin/blogs/create" class="block px-6 py-2 hover:bg-indigo-700 text-white">Create blog</a>
+                <a href="/admin/articles/create" class="block px-6 py-2 hover:bg-indigo-700 text-white">Create article</a>
             </li>
             <li>
-                <a href="/admin/blogs/files" class="block px-6 py-2 hover:bg-indigo-700 text-white">Files</a>
+                <a href="/admin/articles/files" class="block px-6 py-2 hover:bg-indigo-700 text-white">Files</a>
             </li>
             <li class="nav-item">
             <?=

@@ -15,13 +15,13 @@ use yii\web\AssetBundle;
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
-class WriteBlogContentAsset extends AssetBundle
+class WriteArticleContentAsset extends AssetBundle
 {
     public $basePath = '@webroot';
     public $baseUrl = '@web';
 
     public $js = [
-        'js/write-blog-content.js?v=123456790'
+        'js/write-article-content.js?v=123456790'
     ];
     
     public $jsOptions = ['position' => \yii\web\View::POS_END];

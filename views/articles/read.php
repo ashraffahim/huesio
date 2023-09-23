@@ -4,10 +4,10 @@
 
 use app\components\StorageManager;
 
-/** @var app\models\databaseObjects\Blog $blog */
-/** @var strinf $urlSuffix */
+/** @var app\models\databaseObjects\Article $article */
+/** @var string $urlSuffix */
 
-$this->title = $blog->title;
+$this->title = $article->title;
 
 $this->params = [
     'breadcrumbs' => [
@@ -18,21 +18,21 @@ $this->params = [
         $this->title
     ],
     'meta_url' => Yii::$app->params['appBaseUrl'] . 'health/' . $urlSuffix,
-    'meta_description' => $blog->description,
-    'meta_keywords' => $blog->keywords,
-    'creation_date' => $blog->creation_date,
-    'updation_date' => $blog->updation_date,
+    'meta_description' => $article->description,
+    'meta_keywords' => $article->keywords,
+    'creation_date' => $article->creation_date,
+    'updation_date' => $article->updation_date,
 ];
 
-if (!is_null($blog->image_id)) {
-    $this->params['meta_image'] = Yii::$app->params['imgCdnBaseUrl'] . $blog->file->uuid . '.' . pathinfo($blog->file->name, PATHINFO_EXTENSION);
+if (!is_null($article->image_id)) {
+    $this->params['meta_image'] = Yii::$app->params['imgCdnBaseUrl'] . $article->file->uuid . '.' . pathinfo($article->file->name, PATHINFO_EXTENSION);
 } else {
     $this->params['meta_image'] = Yii::$app->params['appBaseUrl'] . 'logo.png';
 }
 ?>
 
-<div class="blog-read">
-    <?= StorageManager::getBlogContent($blog->uuid) ?>
+<div class="article-read">
+    <?= StorageManager::getArticleContent($article->uuid) ?>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1458829588848469"
      crossorigin="anonymous"></script>
     <ins class="adsbygoogle"

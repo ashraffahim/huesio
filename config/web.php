@@ -50,13 +50,13 @@ $config = [
                 'login' => 'site/login',
                 'logout' => 'site/logout',
 
-                'health' => 'blogs/health',
-                'health/<handle:[\w-]+>' => 'blogs/read',
+                'health' => 'articles/health',
+                'health/<handle:[\w-]+>' => 'articles/read',
 
-                'admin/blogs/edit/<uuid:\w+>' => 'admin/blogs/edit',
-                'admin/blogs/write/<uuid:\w+>' => 'admin/blogs/write',
+                'admin/articles/edit/<uuid:\w+>' => 'admin/articles/edit',
+                'admin/articles/write/<uuid:\w+>' => 'admin/articles/write',
 
-                '<handle:[\w-]+>' => 'blogs/read'
+                '<handle:[\w-]+>' => 'articles/read'
             ],
         ],
        

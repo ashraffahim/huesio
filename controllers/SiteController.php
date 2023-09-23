@@ -2,10 +2,9 @@
 
 namespace app\controllers;
 
-use app\models\databaseObjects\Blog;
+use app\models\databaseObjects\Article;
 use Yii;
 use yii\filters\AccessControl;
-use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\forms\LoginForm;
@@ -63,10 +62,10 @@ class SiteController extends _MainController
     {
         return $this->redirect('/health');
 
-        $blogs = Blog::find()->orderBy(['id' => SORT_DESC])->limit(10)->all();
+        $articles = Article::find()->orderBy(['id' => SORT_DESC])->limit(10)->all();
 
         return $this->render('index', [
-            'blogs' => $blogs
+            'articles' => $articles
         ]);
     }
 
@@ -78,12 +77,12 @@ class SiteController extends _MainController
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
-            return $this->goHome('/admin/blogs/list');
+            return $this->goHome('/admin/articles/list');
         }
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack('/admin/blogs/list');
+            return $this->goBack('/admin/articles/list');
         }
 
         $model->password = '';

@@ -1,8 +1,8 @@
 const textContent = $('.text-content');
 const htmlContent = $('.html-content');
-const backButton = $('.write-blog-back');
-const nextButton = $('.write-blog-next');
-const saveButton = $('.write-blog-save');
+const backButton = $('.write-article-back');
+const nextButton = $('.write-article-next');
+const saveButton = $('.write-article-save');
 
 $(document).ready(function() {
     backButton.hide();

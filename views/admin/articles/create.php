@@ -2,7 +2,7 @@
 
 use yii\widgets\ActiveForm;
 
-$this->title = 'Create blog';
+$this->title = 'Create article';
 ?>
 <div class="h-full flex items-center justify-center">
     <div class="w-3/12 p-3">

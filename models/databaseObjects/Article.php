@@ -3,7 +3,7 @@
 namespace app\models\databaseObjects;
 
 /**
- * This is the model class for table "blog".
+ * This is the model class for table "article".
  *
  * @property int $id
  * @property string $uuid
@@ -23,14 +23,14 @@ namespace app\models\databaseObjects;
  * @property File $file
  * 
  */
-class Blog extends \yii\db\ActiveRecord
+class Article extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'blog';
+        return 'article';
     }
 
     /**

@@ -2,16 +2,15 @@
 
 namespace app\models\forms;
 
-use Yii;
 use yii\base\Model;
 
 /**
- * LoginForm is the model behind the login form.
+ * ArticleForm is the model behind the article form.
  *
  * @property-read User|null $user
  *
  */
-class BlogForm extends Model
+class ArticleForm extends Model
 {
     public $handle;
     public $title;

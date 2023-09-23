@@ -10,7 +10,7 @@ use Yii;
  * @property int $id
  * @property string|null $name
  *
- * @property Blog[] $blogs
+ * @property Article[] $articles
  */
 class Issue extends \yii\db\ActiveRecord
 {
@@ -47,12 +47,12 @@ class Issue extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Blogs]].
+     * Gets query for [[Articles]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getBlogs()
+    public function getArticles()
     {
-        return $this->hasMany(Blog::class, ['issue_id' => 'id']);
+        return $this->hasMany(Article::class, ['issue_id' => 'id']);
     }
 }

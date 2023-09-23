@@ -10,7 +10,7 @@ use yii\helpers\FileHelper;
 class StorageManager {
     private const STORAGE_ROOT = __DIR__ . '/../../huesio_storage/';
 
-    private const BLOG_CONTENT = 'blog_content/';
+    private const ARTICLE_CONTENT = 'article_content/';
     private const MEDIA = 'media/';
 
     public const READER_BUFFER_LENGTH = 512;
@@ -119,12 +119,12 @@ class StorageManager {
     }
 
     /**
-     * Get blog content file path
+     * Get article content file path
      * @param string $uuid
      * @return string
      */
-    public static function getBlogContentFilePath(string $uuid) {
-        $path = self::BLOG_CONTENT;
+    public static function getArticleContentFilePath(string $uuid) {
+        $path = self::ARTICLE_CONTENT;
         self::createDirsIfDoesNotExist($path);
         $path .= $uuid . '.html';
 
@@ -146,12 +146,12 @@ class StorageManager {
     }
 
     /**
-     * Upload blog html file to storage
+     * Upload article html file to storage
      * @param string $uuid
      * @throws CannotUploadFileException
      */
-    public static function uploadBlogContent(string $content, string $uuid) {
-        $path = self::getBlogContentFilePath($uuid);
+    public static function uploadArticleContent(string $content, string $uuid) {
+        $path = self::getArticleContentFilePath($uuid);
 
         self::uploadFileContent($content, $path);
     }
@@ -170,13 +170,13 @@ class StorageManager {
     }
 
     /**
-     * Get blog html file content
+     * Get article html file content
      * @param string $uuid
      * @return string
      * @throws FileDoesNotExistException
      */
-    public static function getBlogContent(string $uuid) {
-        $path = self::getBlogContentFilePath($uuid);
+    public static function getArticleContent(string $uuid) {
+        $path = self::getArticleContentFilePath($uuid);
 
         return self::getFileContent($path);
     }
