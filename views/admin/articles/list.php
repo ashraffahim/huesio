@@ -28,7 +28,7 @@ if (empty($articles)):
              • 
             <a href="/admin/articles/write/<?= $article->uuid ?>">Write</a>
              • 
-            <a href="/health/<?= $article->handle ?>" target="_blank">Read</a>
+            <a href="/<?= $article->handle ?>" target="_blank">Read</a>
         </div>
     <?php endforeach; ?>
 </div>

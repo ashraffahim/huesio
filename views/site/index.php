@@ -4,9 +4,17 @@
 /** @var app\models\databaseObjects\Article[] $articles */
 
 $this->title = 'Huesio - Home';
-$hrefPrefix = Yii::$app->params['appBaseUrl'] . 'health/';
+$hrefPrefix = Yii::$app->params['appBaseUrl'];
 $articleIndex = 0;
 ?>
+
+<?php if (count($articles) < 7) : ?>
+<div class="article-home">
+    <div class="flex px-1 lg:px-8 md:px-4 justify-center">
+        <img src="/images/we-are-setting-up.webp" alt="Nothing to see" draggable="false">
+    </div>
+</div>
+<?php return; endif; ?>
 
 <div class="article-home">
     <div class="flex px-1 lg:px-8 md:px-4">

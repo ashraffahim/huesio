@@ -77,7 +77,7 @@ class ArticlesController extends _MainController {
     {
         $model->handle = $article->handle;
         $model->title = $article->title;
-        $model->issue = \app\models\Issue::ISSUE_ID_TO_NAME[$article->issue_id] ?? 1;
+        $model->issue = $article->issue_id;
         $model->description = $article->description;
         $model->keywords = $article->keywords;
         $model->image = !is_null($article->image_id) ? $article->file->uuid : null;
@@ -101,6 +101,8 @@ class ArticlesController extends _MainController {
                     $article->keywords = $model->keywords;
                     $article->creation_date = date('Y-m-d h:i:s');
                     $article->user_id = Yii::$app->user->identity->id;
+                    $article->issue_id = 3; // $model->issue;
+                    $article->is_published = true; // Change later
 
                     if (!$article->save()) {
                         throw new CannotSaveException($article);

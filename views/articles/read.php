@@ -11,13 +11,9 @@ $this->title = $article->title;
 
 $this->params = [
     'breadcrumbs' => [
-        [
-            'label' => 'Health',
-            'url' => '/health',
-        ],
         $this->title
     ],
-    'meta_url' => Yii::$app->params['appBaseUrl'] . 'health/' . $urlSuffix,
+    'meta_url' => Yii::$app->params['appBaseUrl'] . $urlSuffix,
     'meta_description' => $article->description,
     'meta_keywords' => $article->keywords,
     'creation_date' => $article->creation_date,

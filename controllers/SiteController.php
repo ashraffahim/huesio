@@ -60,9 +60,11 @@ class SiteController extends _MainController
      */
     public function actionIndex()
     {
-        return $this->redirect('/health');
-
-        $articles = Article::find()->orderBy(['id' => SORT_DESC])->limit(10)->all();
+        $articles = Article::find()
+        ->where(['is_published' => true])
+        ->orderBy(['id' => SORT_DESC])
+        ->limit(10)
+        ->all();
 
         return $this->render('index', [
             'articles' => $articles
@@ -105,13 +107,4 @@ class SiteController extends _MainController
         return $this->goHome();
     }
 
-    /**
-     * Displays about page.
-     *
-     * @return string
-     */
-    public function actionAbout()
-    {
-        return $this->render('about');
-    }
 }

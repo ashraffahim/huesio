@@ -51,7 +51,7 @@ $this->registerLinkTag(['rel' => 'canonical', 'href' => $this->params['meta_url'
             </div>
             <nav class="grid items-center justify-center">
                 <ul class="list-none whitespace-nowrap child:inline-block child:px-2">
-                    <li><a href="/health" class="uppercase hover:text-indigo-600 text-xs">Health</a></li>
+                    <li><a href="/automotive" class="uppercase hover:text-indigo-600 text-xs">Automotive</a></li>
                 </ul>
             </nav>
             <div class="account"></div>

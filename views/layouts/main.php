@@ -17,11 +17,11 @@ $this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, 
 $this->registerMetaTag(['name' => 'description', 'content' => 'Your only unbiased news source']);
 $this->registerMetaTag(['name' => 'keywords', 'content' => 'unbiased,news,health,fitness,current.events,canada']);
 $this->registerMetaTag(['name' => 'og:title', 'content' => 'Huesio']);
-$this->registerMetaTag(['name' => 'og:url', 'content' => Yii::$app->params['appBaseUrl'] . 'health']);
+$this->registerMetaTag(['name' => 'og:url', 'content' => Yii::$app->params['appBaseUrl']]);
 $this->registerMetaTag(['name' => 'og:description', 'content' => 'Your only unbiased news source']);
 $this->registerMetaTag(['name' => 'og:image', 'content' => Yii::$app->params['appBaseUrl'] . 'logo.png']);
 $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii::getAlias('@web/favicon.ico')]);
-$this->registerLinkTag(['rel' => 'canonical', 'href' => Yii::$app->params['appBaseUrl'] . 'health']);
+$this->registerLinkTag(['rel' => 'canonical', 'href' => Yii::$app->params['appBaseUrl']]);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -52,7 +52,7 @@ $this->registerLinkTag(['rel' => 'canonical', 'href' => Yii::$app->params['appBa
             </div>
             <nav class="grid items-center justify-center">
                 <ul class="list-none whitespace-nowrap child:inline-block child:px-2">
-                    <li><a href="/health">Health</a></li>
+                    <li><a href="/automotive">Automotive</a></li>
                 </ul>
             </nav>
             <div class="account"></div>

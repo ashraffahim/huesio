@@ -5,8 +5,16 @@ namespace app\controllers;
 use app\models\databaseObjects\Article;
 use yii\web\NotFoundHttpException;
 
-class ArticlesController extends _MainController {    
+class ArticlesController extends _MainController {
     public function actionHealth() {
+        $articles = Article::find()->orderBy(['id' => SORT_DESC])->limit(10)->all();
+
+        return $this->render('home', [
+            'articles' => $articles
+        ]);
+    }
+
+    public function actionAutomotive() {
         $articles = Article::find()->orderBy(['id' => SORT_DESC])->limit(10)->all();
 
         return $this->render('home', [
@@ -16,7 +24,10 @@ class ArticlesController extends _MainController {
 
     public function actionRead($handle)
     {
-        $article = Article::findOne(['handle' => $handle]);
+        $article = Article::findOne([
+            'handle' => $handle,
+            'is_published' => true
+        ]);
 
         if (is_null($article)) {
             throw new NotFoundHttpException();

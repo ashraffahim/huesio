@@ -56,6 +56,7 @@ $config = [
                 'admin/articles/edit/<uuid:\w+>' => 'admin/articles/edit',
                 'admin/articles/write/<uuid:\w+>' => 'admin/articles/write',
 
+                'sitemap.xml' => 'site/sitemap',
                 '<handle:[\w-]+>' => 'articles/read'
             ],
         ],
