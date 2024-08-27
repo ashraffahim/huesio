@@ -2,8 +2,10 @@
 
 namespace app\components;
 
+use app\models\exceptions\common\CannotGenerateNanoidException;
 use app\models\exceptions\common\CannotGenerateUuidException;
 use DateTime;
+use Hidehalo\Nanoid\Client;
 use Ramsey\Uuid\Uuid;
 use Yii;
 
@@ -33,6 +35,26 @@ class Util {
         } while($iterations < $maxIterations);
 
         throw new CannotGenerateUuidException();
+    }
+
+    public static function nanoid(string $model = null, string $field = 'nid', int $maxIterations = 3) : string
+    {
+        $iterations = 0;
+        do {
+            $nanoid = (string) (new Client())->generateId();
+    
+            if (is_null($model)) {
+                return $nanoid;
+            }
+    
+            $existingModel = $model::findOne([$field => $nanoid]);
+    
+            if (is_null($existingModel)) {
+                return $nanoid;
+            }
+        } while($iterations < $maxIterations);
+
+        throw new CannotGenerateNanoidException();
     }
 
     public static function getUserFormattedDate(string $date, $type = self::USER_DATE_FORMAT_LONG)

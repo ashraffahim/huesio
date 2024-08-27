@@ -2,12 +2,17 @@
 
 namespace app\controllers;
 
-use app\models\databaseObjects\Article;
+use app\components\Util;
+use app\models\databaseObjects\Account;
+use app\models\databaseObjects\User;
+use app\models\exceptions\common\CannotSaveException;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\forms\LoginForm;
+
+use function PHPUnit\Framework\throwException;
 
 class SiteController extends _MainController
 {
@@ -60,15 +65,66 @@ class SiteController extends _MainController
      */
     public function actionIndex()
     {
-        $articles = Article::find()
-        ->where(['is_published' => true])
-        ->orderBy(['id' => SORT_DESC])
-        ->limit(10)
-        ->all();
+        // if (Yii::$app->user->isGuest) {}
+
+        $articles = [];
+
+        $this->layout = 'blank';
 
         return $this->render('index', [
             'articles' => $articles
         ]);
+    }
+
+    /**
+     * Register action.
+     *
+     * @return Response|string
+     */
+    public function actionRegister()
+    {
+        if (!Yii::$app->user->isGuest) {
+            return $this->goHome('/admin');
+        }
+
+        $errors = [];
+
+        if (Yii::$app->request->isPost) {
+
+            $transaction = Yii::$app->db->beginTransaction();
+
+            try {
+                $user = new User();
+    
+                $password = Yii::$app->request->post('password');
+    
+                $user->nid = Util::nanoid(User::class);
+                $user->first_name = Yii::$app->request->post('first_name');
+                $user->last_name = Yii::$app->request->post('last_name');
+                $user->email = Yii::$app->request->post('email');
+                $user->password_hash = Yii::$app->security->generatePasswordHash($password);
+    
+                if (!$user->save()) {
+                    if ($user->hasErrors()) {
+                        $errors = $user->getErrors();
+                    }
+                    
+                    throw new CannotSaveException($user);
+                }
+
+                $transaction->commit();
+
+                return $this->redirect('/login');
+
+            } catch (\Exception $e) {
+                $transaction->rollBack();
+
+                // throw $e;
+            }
+        }
+
+        $this->layout = 'blank';
+        return $this->render('register', ['errors' => $errors]);
     }
 
     /**
@@ -79,12 +135,12 @@ class SiteController extends _MainController
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
-            return $this->goHome('/admin/articles/list');
+            return $this->goHome('/admin');
         }
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack('/admin/articles/list');
+            return $this->goBack('/admin');
         }
 
         $model->password = '';

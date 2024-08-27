@@ -4,8 +4,6 @@
 /** @var string $content */
 
 use app\assets\AppAsset;
-use app\components\Util;
-use app\widgets\Alert;
 use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
 
@@ -14,69 +12,57 @@ AppAsset::register($this);
 $this->registerCsrfMetaTags();
 $this->registerMetaTag(['charset' => Yii::$app->charset], 'charset');
 $this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, initial-scale=1, shrink-to-fit=no']);
-$this->registerMetaTag(['name' => 'description', 'content' => 'Your only unbiased news source']);
-$this->registerMetaTag(['name' => 'keywords', 'content' => 'unbiased,news,health,fitness,current.events,canada']);
-$this->registerMetaTag(['name' => 'og:title', 'content' => 'Huesio']);
-$this->registerMetaTag(['name' => 'og:url', 'content' => Yii::$app->params['appBaseUrl']]);
-$this->registerMetaTag(['name' => 'og:description', 'content' => 'Your only unbiased news source']);
-$this->registerMetaTag(['name' => 'og:image', 'content' => Yii::$app->params['appBaseUrl'] . 'logo.png']);
+// $this->registerMetaTag(['name' => 'robots', 'content' => 'noindex']);
 $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii::getAlias('@web/favicon.ico')]);
-$this->registerLinkTag(['rel' => 'canonical', 'href' => Yii::$app->params['appBaseUrl']]);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
-<html lang="<?= Yii::$app->language ?>" class="min-h-full">
+<html lang="<?= Yii::$app->language ?>" class="h-screen">
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y91DY88F5B"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'G-Y91DY88F5B');
-    </script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1458829588848469"
-     crossorigin="anonymous"></script>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
-<body class="h-full font-roboto">
+<body class="h-full">
 <?php $this->beginBody() ?>
 
-<header id="header" class="flex justify-center bg-white border-b border-gray-200">
-    <div class="container">
-        <div class="grid grid-cols-3 justify-between py-3 px-4">
-            <div class="brand relative">
-                <div class="top-nav-brand-logo"></div>
-            </div>
-            <nav class="grid items-center justify-center">
-                <ul class="list-none whitespace-nowrap child:inline-block child:px-2">
-                    <li><a href="/automotive">Automotive</a></li>
-                </ul>
-            </nav>
-            <div class="account"></div>
-        </div>
-    </div>
+<header id="header">
 </header>
 
-<main id="main" class="h-full flex-shrink-0" role="main">
-    <div class="container h-full my-0 mx-auto pt-3">
+<main id="main" role="main" class="flex flex-auto h-full">
+    <nav>
+        <div class="bg-white shadow-md w-64 rounded-md m-5">
+            <div class="flex items-center justify-center h-14">
+                <span class="text-xl font-black">TURF</span>
+            </div>
+            <ul class="py-4">
+                <li>
+                    <a href="/admin/articles/list" class="block px-6 py-2 hover:bg-gray-100">Booking</a>
+                </li>
+                <li>
+                    <a href="/turf" class="block px-6 py-2 hover:bg-gray-100">Turf</a>
+                </li>
+                <li class="nav-item">
+                <?=
+                    Html::beginForm(['/site/logout'])
+                    . Html::submitButton(
+                        'Logout',
+                        ['class' => 'px-6 py-2 hover:bg-gray-100 text-red-600 w-full text-left']
+                    )
+                    . Html::endForm()
+                    ?>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container h-full p-4">
         <?php if (!empty($this->params['breadcrumbs'])): ?>
-            <?= Breadcrumbs::widget(['links' => $this->params['breadcrumbs']]) ?>
+            <?= Breadcrumbs::widget([
+                'links' => $this->params['breadcrumbs']
+            ]) ?>
         <?php endif ?>
-        <?= Alert::widget() ?>
         <?= $content ?>
     </div>
 </main>
-
-<footer id="footer" class="flex py-3 px-5">
-    <div class="container">
-        <div class="text-gray-500">
-            <div class="w-full text-end">&copy; <?= Util::getAppName() . ' ' . date('Y') ?></div>
-        </div>
-    </div>
-</footer>
 
 <?php $this->endBody() ?>
 </body>

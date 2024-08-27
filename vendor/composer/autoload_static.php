@@ -83,6 +83,10 @@ class ComposerStaticInita6985564399f65d356b9c1365f71308e
         array (
             'Masterminds\\' => 12,
         ),
+        'H' => 
+        array (
+            'Hidehalo\\Nanoid\\' => 16,
+        ),
         'G' => 
         array (
             'GuzzleHttp\\Psr7\\' => 16,
@@ -261,6 +265,10 @@ class ComposerStaticInita6985564399f65d356b9c1365f71308e
         'Masterminds\\' => 
         array (
             0 => __DIR__ . '/..' . '/masterminds/html5/src',
+        ),
+        'Hidehalo\\Nanoid\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/hidehalo/nanoid-php/src',
         ),
         'GuzzleHttp\\Psr7\\' => 
         array (

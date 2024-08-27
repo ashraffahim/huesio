@@ -1,6 +1,9 @@
+composer.lock
+package-lock.json
 protected/runtime/*
 !protected/runtime/.gitignore
 protected/data/*.db
 themes/classic/views/
 config/db.php
 config/params.php
+node_modules/*

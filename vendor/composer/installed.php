@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'yiisoft/yii2-app-basic',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => NULL,
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
+        'reference' => 'c9a4ae6034f8ea1a06f6997bc38b6799a4b7076f',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -222,6 +222,15 @@
             'install_path' => __DIR__ . '/../guzzlehttp/psr7',
             'aliases' => array(),
             'dev_requirement' => true,
+        ),
+        'hidehalo/nanoid-php' => array(
+            'pretty_version' => '1.1.13',
+            'version' => '1.1.13.0',
+            'reference' => '3fc7c949f4e655939cc30e7110d658af3dbb0e30',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../hidehalo/nanoid-php',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
         'masterminds/html5' => array(
             'pretty_version' => '2.8.1',
@@ -809,9 +818,9 @@
             'dev_requirement' => false,
         ),
         'yiisoft/yii2-app-basic' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => NULL,
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => 'c9a4ae6034f8ea1a06f6997bc38b6799a4b7076f',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

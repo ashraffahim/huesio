@@ -2,6 +2,8 @@
 
 namespace app\models;
 
+use Yii;
+
 class User extends databaseObjects\User implements \yii\web\IdentityInterface
 {
     public $accessToken;
@@ -46,7 +48,7 @@ class User extends databaseObjects\User implements \yii\web\IdentityInterface
      */
     public function getAuthKey()
     {
-        return $this->auth_key;
+        // return $this->auth_key;
     }
 
     /**
@@ -54,7 +56,7 @@ class User extends databaseObjects\User implements \yii\web\IdentityInterface
      */
     public function validateAuthKey($authKey)
     {
-        return $this->auth_key === $authKey;
+        // return $this->auth_key === $authKey;
     }
 
     /**
@@ -65,6 +67,6 @@ class User extends databaseObjects\User implements \yii\web\IdentityInterface
      */
     public function validatePassword($password)
     {
-        return $this->password === $password;
+        return Yii::$app->getSecurity()->validatePassword($password, $this->password_hash);
     }
 }

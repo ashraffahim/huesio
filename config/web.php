@@ -5,6 +5,7 @@ $db = require __DIR__ . '/db.php';
 
 $config = [
     'id' => 'basic',
+    'timeZone' => 'UTC',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'aliases' => [
@@ -44,20 +45,24 @@ $config = [
         'db' => $db,
         
         'urlManager' => [
+            'normalizer' => [
+                'class' => 'yii\web\UrlNormalizer',
+                // use temporary redirection instead of permanent for debugging
+                'action' => yii\web\UrlNormalizer::ACTION_REDIRECT_TEMPORARY,
+            ],
+            'class' => 'yii\web\UrlManager',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                'register' => 'site/register',
                 'login' => 'site/login',
                 'logout' => 'site/logout',
 
-                'health' => 'articles/health',
-                'health/<handle:[\w-]+>' => 'articles/read',
-
-                'admin/articles/edit/<uuid:\w+>' => 'admin/articles/edit',
-                'admin/articles/write/<uuid:\w+>' => 'admin/articles/write',
+                'turf/view/<nid:[\w_-]+>' => 'turf/view',
+                'turf/update/<nid:[\w_-]+>' => 'turf/update',
+                'turf/delete/<nid:[\w_-]+>' => 'turf/delete',
 
                 'sitemap.xml' => 'site/sitemap',
-                '<handle:[\w-]+>' => 'articles/read'
             ],
         ],
        
