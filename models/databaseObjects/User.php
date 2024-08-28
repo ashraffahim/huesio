@@ -41,6 +41,7 @@ class User extends \yii\db\ActiveRecord
             [['first_name', 'last_name'], 'string', 'max' => 32],
             [['email'], 'string', 'max' => 64],
             [['password_hash'], 'string', 'max' => 128],
+            [['email'], 'email'],
             [['email'], 'unique'],
         ];
     }

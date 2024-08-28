@@ -1,10 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;300;400;900&family=Roboto:wght@300;400;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+    body {
+        font-family: "Roboto", sans-serif;
+    }
+
     ol {
         @apply list-decimal
     }
@@ -39,6 +43,53 @@
         background-image: url('../web/favicon.ico');
         background-size: cover;
     }
+
+    .breadcrumb {
+        @apply inline-flex items-center space-x-1 md:space-x-3
+    }
+    
+    .breadcrumb .breadcrumb-item {
+        @apply inline-flex items-center
+    }
+    
+    .breadcrumb .breadcrumb-item:not(.active)::after {
+        content: '/';
+        @apply ml-3
+    }
+    
+    .breadcrumb .breadcrumb-item a {
+        @apply inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white
+    }
+
+    .form-group {
+        @apply flex-auto
+    }
+
+    .select-classic {
+        @apply relative flex justify-between w-full rounded-md px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6
+    }
+    
+    .select-classic.open {
+        @apply ring-2 ring-indigo-600
+    }
+
+    .select-classic:after {
+        content: '\f0dc';
+        font-family: 'Font Awesome 6 Free';
+        @apply inline-block font-black
+    }
+
+    .select-classic .select-options {
+        @apply absolute hidden flex-col w-full bg-white rounded-md shadow-md top-full left-0 mt-1 overflow-x-auto
+    }
+
+    .select-classic.open .select-options {
+        @apply flex
+    }
+
+    .select-classic .select-option {
+        @apply px-3 py-1 hover:bg-gray-100
+    }
     
     .input-classic {
         @apply block w-full rounded-md px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 focus-visible:outline-none
@@ -48,12 +99,12 @@
         @apply block mb-2 text-sm font-medium leading-6 text-gray-900
     }
 
-    .input-error-text-classic {
-        @apply text-red-600 text-xs
+    .has-error .input-classic, .has-error .select-classic {
+        @apply ring-red-600
     }
 
-    .has-error .input-classic {
-        @apply ring-red-600
+    .input-error-text-classic {
+        @apply text-red-600 text-xs
     }
 
     .btn-classic {
@@ -119,21 +170,20 @@
     .stacked-list > li > div:last-child > p:last-child {
         @apply mt-1 text-xs leading-5 text-gray-500
     }
-}
 
-.breadcrumb {
-    @apply inline-flex items-center space-x-1 md:space-x-3
-}
+    .grid-view {
+        @apply border border-gray-300 rounded-md
+    }
 
-.breadcrumb .breadcrumb-item {
-    @apply inline-flex items-center
-}
+    .table-classic {
+        @apply border-collapse w-full
+    }
 
-.breadcrumb .breadcrumb-item:not(.active)::after {
-    content: '/';
-    @apply ml-3
-}
+    .table-classic th, .table-classic td {
+        @apply p-3
+    }
 
-.breadcrumb .breadcrumb-item a {
-    @apply inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white
+    .table-classic td {
+        @apply border-t border-gray-200
+    }
 }

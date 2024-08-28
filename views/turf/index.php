@@ -23,15 +23,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 <li>
                     <div>
                         <div>
-                            <p><?= Html::a($turf->name, ['turf/view/' . $turf->nid], ['class' => '']) ?></p>
+                            <p><?= Html::a($turf->name, ['/turf/view/' . $turf->nid], ['class' => '']) ?></p>
                             <p><?= $turf->address ?></p>
                         </div>
                     </div>
                     <div>
                         <p>
-                            <?= Html::a('Edit', ['turf/update/' . $turf->nid], ['class' => '']) ?>
+                            <?= Html::a('Edit', ['/turf/update/' . $turf->nid], ['class' => '']) ?>
                              / 
-                            <?= Html::a('Delete', ['turf/delete/' . $turf->nid], [
+                            <?= Html::a('Delete', ['/turf/delete/' . $turf->nid], [
                                 'class' => 'text-red-600',
                                 'data' => [
                                     'confirm' => 'Are you sure you want to delete this item?',
