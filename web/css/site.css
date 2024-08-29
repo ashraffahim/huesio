@@ -724,6 +724,7 @@ dl > div > dd{
   position: relative;
   display: flex;
   width: 100%;
+  cursor: pointer;
   justify-content: space-between;
   border-radius: 0.375rem;
   padding-left: 0.5rem;
@@ -781,7 +782,8 @@ dl > div > dd{
   left: 0px;
   margin-top: 0.25rem;
   display: none;
-  width: 100%;
+  width: auto;
+  min-width: 100%;
   flex-direction: column;
   overflow-x: auto;
   border-radius: 0.375rem;
@@ -1348,12 +1350,6 @@ dl > div > dd{
   margin-left: calc(0.75rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
-.space-x-5 > :not([hidden]) ~ :not([hidden]){
-  --tw-space-x-reverse: 0;
-  margin-right: calc(1.25rem * var(--tw-space-x-reverse));
-  margin-left: calc(1.25rem * calc(1 - var(--tw-space-x-reverse)));
-}
-
 .space-y-3 > :not([hidden]) ~ :not([hidden]){
   --tw-space-y-reverse: 0;
   margin-top: calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));
@@ -1699,6 +1695,14 @@ dl > div > dd{
     max-width: 42rem;
   }
 
+  .sm\:max-w-36{
+    max-width: 9rem;
+  }
+
+  .sm\:max-w-60{
+    max-width: 15rem;
+  }
+
   .sm\:max-w-lg{
     max-width: 32rem;
   }
@@ -1709,6 +1713,10 @@ dl > div > dd{
 
   .sm\:max-w-sm{
     max-width: 24rem;
+  }
+
+  .sm\:max-w-xs{
+    max-width: 20rem;
   }
 }
 

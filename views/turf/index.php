@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="sm:max-w-lg">
         <div class="flex justify-end">
-            <?= Html::a('<i class="fa fa-plus mt-0.5"></i> Create', '/turf/create', ['class' => 'btn-classic-muted mt-0']) ?>
+            <?= Html::a('<i class="fa fa-plus mt-0.5"></i> Create', '/turves/create', ['class' => 'btn-classic-muted mt-0']) ?>
         </div>
         <ul class="stacked-list">
             <?php
@@ -23,15 +23,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 <li>
                     <div>
                         <div>
-                            <p><?= Html::a($turf->name, ['/turf/view/' . $turf->nid], ['class' => '']) ?></p>
+                            <p><?= Html::a($turf->name, ['/turves/view/' . $turf->nid], ['class' => '']) ?></p>
                             <p><?= $turf->address ?></p>
                         </div>
                     </div>
                     <div>
                         <p>
-                            <?= Html::a('Edit', ['/turf/update/' . $turf->nid], ['class' => '']) ?>
+                            <?= Html::a('Edit', ['/turves/update/' . $turf->nid], ['class' => '']) ?>
                              / 
-                            <?= Html::a('Delete', ['/turf/delete/' . $turf->nid], [
+                            <?= Html::a('Delete', ['/turves/delete/' . $turf->nid], [
                                 'class' => 'text-red-600',
                                 'data' => [
                                     'confirm' => 'Are you sure you want to delete this item?',

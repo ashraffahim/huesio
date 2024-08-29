@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="sm:max-w-2xl">
         <div class="flex justify-end">
-            <?= Html::a('<i class="fa fa-plus mt-0.5"></i> Create', '/booking/create', ['class' => 'btn-classic-muted mt-0 mb-1']) ?>
+            <?= Html::a('<i class="fa fa-plus mt-0.5"></i> Create', '/bookings/create', ['class' => 'btn-classic-muted mt-0 mb-1']) ?>
         </div>
 
         <?= GridView::widget([
@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'class' => ActionColumn::className(),
                     'urlCreator' => function ($action, Booking $model, $key, $index, $column) {
-                        return '/booking/' . $action . '/' . $model->nid;
+                        return '/bookings/' . $action . '/' . $model->nid;
                     }
                 ],
             ],

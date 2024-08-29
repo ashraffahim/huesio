@@ -26,7 +26,7 @@ use yii\widgets\ActiveForm;
         </div>
 
         <div class="form-group flex justify-end">
-            <?= Html::a('Cancel', is_null($model->id) ? '/turf' : '/turf/view/' . $model->nid, $options = ['class' => 'btn-muted']) ?>
+            <?= Html::a('Cancel', is_null($model->id) ? '/turves' : '/turves/view/' . $model->nid, $options = ['class' => 'btn-muted']) ?>
             <?= Html::submitButton(is_null($model->id) ? 'Create' : 'Update', ['class' => 'btn-classic ml-3']) ?>
         </div>
 

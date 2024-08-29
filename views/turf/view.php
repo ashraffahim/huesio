@@ -24,8 +24,8 @@ $this->registerJsFile('@web/js/turf-image-upload.js', ['depends' => '\yii\web\Jq
                         <dt></dt>
                         <dd>
                             <div class="flex">
-                                <?= Html::a('Update', ['turf/update/' . $model->nid], ['class' => 'btn-muted mt-0']) ?>
-                                <?= Html::a('Delete', ['turf/delete/' . $model->nid], [
+                                <?= Html::a('Update', ['turves/update/' . $model->nid], ['class' => 'btn-muted mt-0']) ?>
+                                <?= Html::a('Delete', ['turves/delete/' . $model->nid], [
                                     'class' => 'btn-danger-muted mt-0',
                                     'data' => [
                                         'confirm' => 'Are you sure you want to delete this item?',

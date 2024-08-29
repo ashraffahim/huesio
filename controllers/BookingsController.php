@@ -10,9 +10,9 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * BookingController implements the CRUD actions for Booking model.
+ * BookingsController implements the CRUD actions for Booking model.
  */
-class BookingController extends _MainController
+class BookingsController extends _MainController
 {
     /**
      * @inheritDoc
@@ -82,7 +82,7 @@ class BookingController extends _MainController
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect('/booking/view/' . $model->nid);
+                return $this->redirect('/bookings/view/' . $model->nid);
             }
         } else {
             $model->loadDefaultValues();
@@ -106,7 +106,7 @@ class BookingController extends _MainController
         $model = $this->findModel($nid);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect('/booking/view/' . $model->nid);
+            return $this->redirect('/bookings/view/' . $model->nid);
         }
 
         return $this->render('update', [

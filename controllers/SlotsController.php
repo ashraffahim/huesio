@@ -2,19 +2,16 @@
 
 namespace app\controllers;
 
-use app\components\Util;
-use app\models\databaseObjects\Turf;
+use app\models\databaseObjects\Slot;
+use yii\data\ActiveDataProvider;
 use app\controllers\_MainController;
-use app\models\exceptions\common\CannotSaveException;
-use app\models\exceptions\HuesioException;
-use Yii;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * TurfController implements the CRUD actions for Turf model.
+ * SlotsController implements the CRUD actions for Slot model.
  */
-class TurfController extends _MainController
+class SlotsController extends _MainController
 {
     /**
      * @inheritDoc
@@ -35,97 +32,79 @@ class TurfController extends _MainController
     }
 
     /**
-     * Lists all Turf models.
+     * Lists all Slot models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $model = Turf::find()->all();
+        $dataProvider = new ActiveDataProvider([
+            'query' => Slot::find(),
+            /*
+            'pagination' => [
+                'pageSize' => 50
+            ],
+            'sort' => [
+                'defaultOrder' => [
+                    'id' => SORT_DESC,
+                ]
+            ],
+            */
+        ]);
 
         return $this->render('index', [
-            'model' => $model,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
     /**
-     * Displays a single Turf model.
-     * @param int $nid NID
+     * Displays a single Slot model.
+     * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($nid)
+    public function actionView($id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($nid),
+            'model' => $this->findModel($id),
         ]);
     }
 
     /**
-     * Creates a new Turf model.
+     * Creates a new Slot model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Turf();
+        $model = new Slot();
 
         if ($this->request->isPost) {
-
-            $transaction = Yii::$app->db->beginTransaction();
-
-            try {
-                if ($model->load($this->request->post())) {
-
-                    $model->nid = Util::nanoid(Turf::class);
-
-                    if (!$model->validate()) {
-                        throw new \InvalidArgumentException();
-                    }
-
-                    if (!$model->save()) {
-                        throw new CannotSaveException($model);
-                    }
-                } else {
-                    throw new \InvalidArgumentException();
-                }
-                
-                $transaction->commit();
-
-                return $this->redirect(['view', 'nid' => $model->nid]);
-
-            } catch (\InvalidArgumentException $e) {
-                
-                $transaction->rollBack();
-
-            } catch (\Exception $e) {
-                $transaction->rollBack();
-
-                throw $e;
+            if ($model->load($this->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
             }
-
         } else {
             $model->loadDefaultValues();
         }
 
         return $this->render('create', [
-            'model' => $model
+            'model' => $model,
         ]);
     }
 
     /**
-     * Updates an existing Turf model.
+     * Updates an existing Slot model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $nid NID
+     * @param int $id ID
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($nid)
+    public function actionUpdate($id)
     {
-        $model = $this->findModel($nid);
+        $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'nid' => $model->nid]);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
@@ -134,29 +113,29 @@ class TurfController extends _MainController
     }
 
     /**
-     * Deletes an existing Turf model.
+     * Deletes an existing Slot model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $nid NID
+     * @param int $id ID
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($nid)
+    public function actionDelete($id)
     {
-        $this->findModel($nid)->delete();
+        $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Turf model based on its primary key value.
+     * Finds the Slot model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $nid NID
-     * @return Turf the loaded model
+     * @param int $id ID
+     * @return Slot the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($nid)
+    protected function findModel($id)
     {
-        if (($model = Turf::findOne(['nid' => $nid])) !== null) {
+        if (($model = Slot::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

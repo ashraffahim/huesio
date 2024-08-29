@@ -58,9 +58,9 @@ $config = [
                 'login' => 'site/login',
                 'logout' => 'site/logout',
 
-                'turf/view/<nid:[\w_-]+>' => 'turf/view',
-                'turf/update/<nid:[\w_-]+>' => 'turf/update',
-                'turf/delete/<nid:[\w_-]+>' => 'turf/delete',
+                'turves/view/<nid:[\w_-]+>' => 'turves/view',
+                'turves/update/<nid:[\w_-]+>' => 'turves/update',
+                'turves/delete/<nid:[\w_-]+>' => 'turves/delete',
 
                 'sitemap.xml' => 'site/sitemap',
             ],
