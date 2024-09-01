@@ -16,7 +16,8 @@ use Yii;
  * @property int|null $account_id
  * @property int|null $email_verified
  *
- * @property Account[] $accounts
+ * @property Account $account
+ * @property Booking[] $bookings
  */
 class User extends \yii\db\ActiveRecord
 {
@@ -64,12 +65,22 @@ class User extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Accounts]].
+     * Gets query for [[Account]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getAccounts()
+    public function getAccount()
     {
-        return $this->hasMany(Account::class, ['owner_user_id' => 'id']);
+        return $this->hasOne(Account::class, ['owner_user_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Bookings]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getBookings()
+    {
+        return $this->hasMany(Booking::class, ['user_id' => 'id']);
     }
 }

@@ -12,7 +12,7 @@
     ol {
         @apply list-decimal
     }
-    
+
     h1 {
         @apply text-2xl
     }
@@ -21,16 +21,23 @@
         @apply divide-y divide-gray-100
     }
 
-    dl > div {
+    dl>div {
         @apply px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0
     }
-    
-    dl > div > dt {
+
+    dl>div>dt {
         @apply text-sm font-medium leading-6 text-gray-900
     }
 
-    dl > div > dd {
+    dl>div>dd {
         @apply mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0
+    }
+    
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+        -moz-appearance: textfield;
+        -webkit-appearance: none;
+        margin: 0;
     }
 }
 
@@ -45,18 +52,18 @@
     }
 
     .breadcrumb {
-        @apply inline-flex items-center space-x-1 md:space-x-3
+        @apply inline-flex items-center gap-x-1 md:gap-x-3
     }
-    
+
     .breadcrumb .breadcrumb-item {
         @apply inline-flex items-center
     }
-    
+
     .breadcrumb .breadcrumb-item:not(.active)::after {
         content: '/';
         @apply ml-3
     }
-    
+
     .breadcrumb .breadcrumb-item a {
         @apply inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white
     }
@@ -66,9 +73,9 @@
     }
 
     .select-classic {
-        @apply relative flex justify-between w-full rounded-md px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 cursor-pointer
+        @apply relative flex justify-between w-full bg-white rounded-md px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 cursor-pointer gap-1
     }
-    
+
     .select-classic.open {
         @apply ring-2 ring-indigo-600
     }
@@ -90,7 +97,7 @@
     .select-classic .select-option {
         @apply px-3 py-1 hover:bg-gray-100
     }
-    
+
     .input-classic {
         @apply block w-full rounded-md px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 focus-visible:outline-none
     }
@@ -131,43 +138,58 @@
         @apply flex mt-6 justify-center items-center gap-x-1 rounded-md bg-white px-3 py-1.5 text-sm font-semibold leading-6 text-red-600 hover:bg-red-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-300
     }
 
+    .input-group {
+        padding-left: 7px;
+        padding-right: 7px;
+        @apply flex w-full py-1.5 rounded-md text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:text-sm sm:leading-6
+    }
+
+    .input-group .input-classic, .input-group .select-classic {
+        padding: 0 1px 0 1px;
+        @apply ring-0 focus-within:ring-0 shadow-none bg-transparent
+    }
+
+    .input-group .select-options {
+        @apply mt-2
+    }
+
     .stacked-list {
         @apply divide-y divide-gray-100
     }
 
-    .stacked-list > li {
+    .stacked-list>li {
         @apply flex justify-between gap-x-6 py-5
     }
 
-    .stacked-list > li > div:first-child {
+    .stacked-list>li>div:first-child {
         @apply flex min-w-0 gap-x-4
     }
 
-    .stacked-list > li > div:last-child {
+    .stacked-list>li>div:last-child {
         @apply hidden shrink-0 sm:flex sm:flex-col sm:items-end
     }
 
-    .stacked-list > li > div > img {
+    .stacked-list>li>div>img {
         @apply h-12 w-12 flex-none bg-gray-50
     }
 
-    .stacked-list > li > div > div {
+    .stacked-list>li>div>div {
         @apply min-w-0 flex-auto
     }
 
-    .stacked-list > li > div:first-child > div > p:first-child {
+    .stacked-list>li>div:first-child>div>p:first-child {
         @apply text-sm font-semibold leading-6 text-gray-900
     }
 
-    .stacked-list > li > div:first-child > div > p:last-child {
+    .stacked-list>li>div:first-child>div>p:last-child {
         @apply mt-1 truncate text-xs leading-5 text-gray-500
     }
 
-    .stacked-list > li > div:last-child > p:first-child {
+    .stacked-list>li>div:last-child>p:first-child {
         @apply text-sm leading-6 text-gray-900
     }
 
-    .stacked-list > li > div:last-child > p:last-child {
+    .stacked-list>li>div:last-child>p:last-child {
         @apply mt-1 text-xs leading-5 text-gray-500
     }
 

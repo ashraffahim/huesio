@@ -62,6 +62,13 @@ $config = [
                 'turves/update/<nid:[\w_-]+>' => 'turves/update',
                 'turves/delete/<nid:[\w_-]+>' => 'turves/delete',
 
+                'bookings/view/<nid:[\w_-]+>' => 'turves/view',
+                'bookings/update/<nid:[\w_-]+>' => 'turves/update',
+                'bookings/delete/<nid:[\w_-]+>' => 'turves/delete',
+
+                'slots/update/<nid:[\w_-]+>' => 'slots/update',
+                'slots/delete/<nid:[\w_-]+>' => 'slots/delete',
+
                 'sitemap.xml' => 'site/sitemap',
             ],
         ],

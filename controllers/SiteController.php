@@ -112,6 +112,19 @@ class SiteController extends _MainController
                     throw new CannotSaveException($user);
                 }
 
+                $account = new Account();
+                $account->nid = Util::nanoid(Account::class);
+                $account->name = $user->first_name . ' ' . $user->last_name;
+                $account->owner_user_id = $user->id;
+
+                if (!$account->save()) {
+                    if ($account->hasErrors()) {
+                        $errors = $user->getErrors();
+                    }
+                    
+                    throw new CannotSaveException($user);
+                }
+
                 $transaction->commit();
 
                 return $this->redirect('/login');

@@ -5,6 +5,8 @@ namespace app\controllers;
 use app\models\databaseObjects\Slot;
 use yii\data\ActiveDataProvider;
 use app\controllers\_MainController;
+use app\models\databaseObjects\Turf;
+use Yii;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -22,7 +24,7 @@ class SlotsController extends _MainController
             parent::behaviors(),
             [
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
                     ],
@@ -38,56 +40,9 @@ class SlotsController extends _MainController
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Slot::find(),
-            /*
-            'pagination' => [
-                'pageSize' => 50
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'id' => SORT_DESC,
-                ]
-            ],
-            */
-        ]);
+        $model = Turf::findAll(['account_id' => Yii::$app->user->identity->account_id]);
 
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    /**
-     * Displays a single Slot model.
-     * @param int $id ID
-     * @return string
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
-    /**
-     * Creates a new Slot model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
-     */
-    public function actionCreate()
-    {
-        $model = new Slot();
-
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
-        } else {
-            $model->loadDefaultValues();
-        }
-
-        return $this->render('create', [
             'model' => $model,
         ]);
     }
@@ -99,15 +54,23 @@ class SlotsController extends _MainController
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
+    public function actionUpdate($nid)
     {
-        $model = $this->findModel($id);
+        $turf = Turf::findOne([
+            'account_id' => Yii::$app->user->identity->account_id,
+            'nid' => $nid
+        ]);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
+        if (is_null($turf)) throw new NotFoundHttpException('The requested page does not exist.');
+
+        $model = Slot::findAll(['turf_id' => $turf->id]);
+
+        /* if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'nid' => $model->id]);
+        } */
 
         return $this->render('update', [
+            'turf' => $turf,
             'model' => $model,
         ]);
     }
@@ -119,9 +82,9 @@ class SlotsController extends _MainController
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
+    public function actionDelete($nid)
     {
-        $this->findModel($id)->delete();
+        $this->findModel($nid)->delete();
 
         return $this->redirect(['index']);
     }
@@ -133,9 +96,11 @@ class SlotsController extends _MainController
      * @return Slot the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected function findModel($nid)
     {
-        if (($model = Slot::findOne(['id' => $id])) !== null) {
+        $model = Slot::findOne(['nid' => $nid]);
+
+        if (!is_null($model) && $model->turf->account_id === Yii::$app->user->identity->account_id) {
             return $model;
         }
 

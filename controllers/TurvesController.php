@@ -24,7 +24,7 @@ class TurvesController extends _MainController
             parent::behaviors(),
             [
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
                     ],
@@ -40,7 +40,7 @@ class TurvesController extends _MainController
      */
     public function actionIndex()
     {
-        $model = Turf::find()->all();
+        $model = Turf::findAll(['account_id' => Yii::$app->user->identity->account_id]);
 
         return $this->render('index', [
             'model' => $model,
@@ -77,6 +77,7 @@ class TurvesController extends _MainController
                 if ($model->load($this->request->post())) {
 
                     $model->nid = Util::nanoid(Turf::class);
+                    $model->account_id = Yii::$app->user->identity->account->id;
 
                     if (!$model->validate()) {
                         throw new \InvalidArgumentException();
@@ -123,8 +124,39 @@ class TurvesController extends _MainController
     {
         $model = $this->findModel($nid);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'nid' => $model->nid]);
+        if ($this->request->isPost) {
+
+            $transaction = Yii::$app->db->beginTransaction();
+            
+            try {
+
+                if ($model->load($this->request->post())) {
+
+                    if (!$model->validate()) {
+                        throw new \InvalidArgumentException();
+                    }
+
+                    if (!$model->save()) {
+                        throw new CannotSaveException($model);
+                    }
+
+                } else {
+                    throw new \InvalidArgumentException();
+                }
+                
+                $transaction->commit();
+
+                return $this->redirect(['view', 'nid' => $model->nid]);
+            
+            } catch (\InvalidArgumentException $e) {
+                        
+                $transaction->rollBack();
+
+            } catch (\Exception $e) {
+                $transaction->rollBack();
+
+                throw $e;
+            }
         }
 
         return $this->render('update', [
@@ -155,7 +187,7 @@ class TurvesController extends _MainController
      */
     protected function findModel($nid)
     {
-        if (($model = Turf::findOne(['nid' => $nid])) !== null) {
+        if (($model = Turf::findOne(['nid' => $nid, 'account_id' => Yii::$app->user->identity->account->id])) !== null) {
             return $model;
         }
 

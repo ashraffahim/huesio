@@ -33,9 +33,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 //'start_time',
                 //'end_time',
                 [
-                    'class' => ActionColumn::className(),
+                    'class' => ActionColumn::class,
                     'urlCreator' => function ($action, Booking $model, $key, $index, $column) {
-                        return '/bookings/' . $action . '/' . $model->nid;
+                        return Url::toRoute([$action, $model->nid]);
                     }
                 ],
             ],

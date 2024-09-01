@@ -10,7 +10,7 @@ use Yii;
  * @property int $id
  * @property string $nid
  * @property int $turf_id
- * @property int $user_id
+ * @property int|null $user_id
  * @property string $date
  * @property string|null $email
  * @property float|null $phone
@@ -36,7 +36,7 @@ class Booking extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nid', 'turf_id', 'user_id', 'date', 'start_time', 'end_time'], 'required'],
+            [['nid', 'turf_id', 'date', 'start_time', 'end_time'], 'required'],
             [['turf_id', 'user_id'], 'default', 'value' => null],
             [['turf_id', 'user_id'], 'integer'],
             [['date', 'start_time', 'end_time'], 'safe'],

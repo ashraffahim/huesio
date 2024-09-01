@@ -1,45 +1,38 @@
 <?php
 
-use app\models\databaseObjects\Slot;
 use yii\helpers\Html;
-use yii\helpers\Url;
-use yii\grid\ActionColumn;
-use yii\grid\GridView;
 
 /** @var yii\web\View $this */
-/** @var yii\data\ActiveDataProvider $dataProvider */
+/** @var app\models\databaseObjects\Turf[] $model */
 
-$this->title = 'Slots';
+$this->title = 'Select a turf';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="slot-index">
+<div class="turf-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1 class="mt-6"><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Create Slot', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
-
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'nid',
-            'turf_id',
-            'day',
-            'start_time',
-            //'end_time',
-            [
-                'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Slot $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'id' => $model->id]);
-                 }
-            ],
-        ],
-    ]); ?>
-
+    <div class="sm:max-w-lg">
+        <ul class="stacked-list">
+            <?php
+            foreach ($model as $turf) :
+            ?>
+                <li class="cursor-pointer hover:bg-gray-100 rounded-md pl-2" onclick="location.href='/slots/update/<?= $turf->nid ?>'">
+                    <div>
+                        <div>
+                            <p><?= $turf->name ?></p>
+                            <p><?= $turf->address ?></p>
+                        </div>
+                    </div>
+                    <div>
+                        <p></p>
+                        <p></p>
+                    </div>
+                </li>
+            <?php
+            endforeach;
+            ?>
+        </ul>
+    </div>
 
 </div>

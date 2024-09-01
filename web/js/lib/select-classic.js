@@ -14,24 +14,48 @@ function selectClassic(options) {
 
     const finalOptions = {...defaultOptions, ...options};
 
-    $(document).on('click', finalOptions.selectSelector, function() {
-        $(this).addClass('open');
+    $(finalOptions.selectSelector).each(function() {
+        $(this).val($(this).find(`${finalOptions.valueSelector} input[name="${$(this).data(finalOptions.nameDataAttr)}"]`).val());
     });
 
-    $(document).on('click', finalOptions.optionSelector, function() {
-        const item = $(this);
-        const select = item.parents(finalOptions.selectSelector);
+    $(document).on('click', function(evt) {
+        let item = [];
 
-        const inputName = select.data(finalOptions.nameDataAttr);
-        const inputValue = item.data(finalOptions.valueDataAttr);
+        if ($(evt.target).is(finalOptions.optionSelector)) item = $(evt.target);
+        else item = $(evt.target).parents(finalOptions.optionSelector);
 
-        select.parents('.has-error').removeClass('has-error');
+        if (item.length !== 0) {
+            
+            // const item = $(finalOptions.optionSelector);
+            const select = item.parents(finalOptions.selectSelector);
 
-        item.parents(finalOptions.selectSelector)
-        .find(finalOptions.valueSelector)
-        .html(
-            item.html()
-            + '<input type="hidden" name="' + inputName + '" value="' + inputValue + '">'
-        );
+            const inputName = select.data(finalOptions.nameDataAttr);
+            const inputValue = item.data(finalOptions.valueDataAttr);
+
+            select.parents('.has-error').removeClass('has-error');
+            select.removeClass('open');
+
+            select.val(inputValue);
+            select.trigger('change');
+
+            item.parents(finalOptions.selectSelector)
+            .find(finalOptions.valueSelector)
+            .html(
+                item.html()
+                + '<input type="hidden" name="' + inputName + '" value="' + inputValue + '">'
+            );
+
+        } else {
+            let select = [];
+
+            if ($(evt.target).is(finalOptions.selectSelector)) select = $(evt.target);
+            else select = $(evt.target).parents(finalOptions.selectSelector);
+
+            if (select.length !== 0) {
+                $(finalOptions.selectSelector).removeClass('open');
+                $(select).addClass('open');
+            }
+        }
     });
+
 }

@@ -13,6 +13,7 @@ use Yii;
  * @property int $day
  * @property string $start_time
  * @property string $end_time
+ * @property int $is_open
  *
  * @property Turf $turf
  */
@@ -32,11 +33,12 @@ class Slot extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nid', 'turf_id', 'day', 'start_time', 'end_time'], 'required'],
-            [['turf_id', 'day'], 'default', 'value' => null],
-            [['turf_id', 'day'], 'integer'],
+            [['nid', 'turf_id', 'day', 'start_time', 'end_time', 'is_open'], 'required'],
+            [['turf_id', 'day', 'is_open'], 'default', 'value' => null],
+            [['turf_id', 'day', 'is_open'], 'integer'],
             [['start_time', 'end_time'], 'safe'],
             [['nid'], 'string', 'max' => 21],
+            [['nid'], 'unique'],
             [['turf_id'], 'exist', 'skipOnError' => true, 'targetClass' => Turf::class, 'targetAttribute' => ['turf_id' => 'id']],
         ];
     }
@@ -53,6 +55,7 @@ class Slot extends \yii\db\ActiveRecord
             'day' => 'Day',
             'start_time' => 'Start Time',
             'end_time' => 'End Time',
+            'is_open' => 'Is Open',
         ];
     }
 
