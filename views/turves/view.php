@@ -50,21 +50,41 @@ $this->registerJsFile('@web/js/turf-image-upload.js', ['depends' => '\yii\web\Jq
                 </dl>
             </div>
         </div>
-    
+
         <div class="flex-auto lg:max-w-lg">
             <div class="mt-6">
-                <div class="relative">
-                    <div id="image-input-dropbox" class="absolute inset-x-0 inset-y-0 flex justify-center items-center border-dashed border-2 border-gray-200 text-gray-400"><span class="font-semibold text-indigo-600 mr-1.5">Select</span> / Drop image</div>
-                    <input type="file" name="image" id="image-input" class="relative w-full h-40 opacity-0" multiple>
-                </div>
-    
-                <div class="mt-6">
-                    <ul id="uploaded-images" class="stacked-list"></ul>
-                </div>
-    
-                <div class="flex mt-6 justify-end">
-                    <button id="upload-image" class="btn-classic" disabled>Upload</button>
-                </div>
+                <form id="media-files-form">
+                    <div class="relative">
+                        <div id="image-input-dropbox" class="absolute inset-x-0 inset-y-0 flex justify-center items-center border-dashed border-2 border-gray-200 text-gray-400"><span class="font-semibold text-indigo-600 mr-1.5">Select</span> / Drop image</div>
+                        <input type="file" name="image" id="image-input" class="relative w-full h-40 opacity-0" multiple>
+                    </div>
+
+                    <div class="mt-6">
+                        <ul id="uploaded-images" class="stacked-list">
+                            <?php
+                            $files = glob(Yii::getAlias("@webroot/data/turf/$model->nid/*"));
+                            foreach ($files as $file) :
+                                $ext = pathinfo($file, PATHINFO_EXTENSION);
+                            ?>
+                                <li>
+                                    <div>
+                                        <img src="<?= "/data/turf/$model->nid/" . basename($file) ?>" class="object-contain rounded-sm">
+                                        <div>
+                                            <p>#<?= basename($file, '.' . $ext) ?></p>
+                                            <p><?= strtoupper($ext) ?></p>
+                                        </div>
+                                    </div>
+                                    <div>
+                                    </div>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+
+                    <div class="flex mt-6 justify-end">
+                        <button id="upload-image" class="btn-classic" disabled>Upload</button>
+                    </div>
+                </form>
             </div>
 
         </div>

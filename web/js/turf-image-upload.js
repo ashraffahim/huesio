@@ -22,7 +22,7 @@ $(document).on('dragend drop', evt => {
     }
 });
 
-$('#image-input').on('change', function() {
+$('#image-input').on('change', function () {
 
     const files = Array.from(this.files);
 
@@ -37,15 +37,18 @@ $('#image-input').on('change', function() {
     $('#upload-image').prop('disabled', false);
 });
 
-$(document).on('blur', '.uploaded-file-name', function() {
+$(document).on('blur', '.uploaded-file-name', function () {
     const index = $(this).data('index');
     const name = $(this).val();
 
     changeUploadedFileName(index, name);
 });
 
-$('#media-files-form').on('submit', async function(e) {
+$('#media-files-form').on('submit', async function (e) {
     e.preventDefault();
+
+    const csrf = { param: $('meta[name="csrf-param"]').attr('content'), token: $('meta[name="csrf-token"]').attr('content') };
+    const nid = location.pathname.match(/\/([_\w-]+)$/)[1];
 
     $('#upload-image').prop('disabled', true);
 
@@ -53,25 +56,34 @@ $('#media-files-form').on('submit', async function(e) {
     headers.append('X-Requested-With', 'fetch');
 
     const formData = new FormData(this);
+    formData.append('nid', nid);
+    formData.append(csrf.param, csrf.token);
     uploadedFiles.forEach((file, index) => {
         formData.append('file[' + index + ']', file);
     });
 
-    try {
-        const response = await fetch($(this).attr('action'), {
-            headers,
-            method: 'POST',
-            body: formData
-        });
-    
-        if (!response.ok) {
-            throw new Error(await response.text());
-        }
+    const response = await fetch('/turves/upload-image', {
+        headers,
+        method: 'POST',
+        body: formData
+    });
 
-        window.location.reload();
-    } catch(e) {
-        console.log(e);
+    $('#upload-image').prop('disabled', false);
+
+    if (!response.ok) {
+        console.log(await response.json());
+        return;
     }
+
+    const responseData = await response.json();
+
+    if (responseData.failedUploads.length > 0) {
+        alert("Failed uploads:\n" + responseData.failedUploads.join("\n"));
+    }
+
+    console.log(responseData);
+
+    // window.location.reload();
 });
 
 const updateUploadedFileList = () => {
@@ -85,10 +97,10 @@ const updateUploadedFileList = () => {
             '<li>'
                 + '<div>'
                     + '<img src="' + file.url + '" class="object-contain rounded-sm">'
-                    + '<div>'
-                        + '<p><input type="text" value="' + fileNameParts.join('.') + '" class="uploaded-file-name" data-index="' + index + '"></p>'
-                        + '<p>' + fileExt[0].toUpperCase() + '</p>'
-                    + '</div>'
+                        + '<div>'
+                            + '<p><input type="text" value="' + fileNameParts.join('.') + '" class="uploaded-file-name" data-index="' + index + '"></p>'
+                            + '<p>' + fileExt[0].toUpperCase() + '</p>'
+                        + '</div>'
                 + '</div>'
                 + '<div>'
                 + '</div>'

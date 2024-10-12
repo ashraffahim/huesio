@@ -6,6 +6,7 @@ use app\components\Util;
 use app\models\databaseObjects\Turf;
 use app\controllers\_MainController;
 use app\models\exceptions\common\CannotSaveException;
+use app\models\exceptions\common\CannotUploadFileException;
 use Yii;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -89,21 +90,18 @@ class TurvesController extends _MainController
                 } else {
                     throw new \InvalidArgumentException();
                 }
-                
+
                 $transaction->commit();
 
                 return $this->redirect(['view', 'nid' => $model->nid]);
-
             } catch (\InvalidArgumentException $e) {
-                
-                $transaction->rollBack();
 
+                $transaction->rollBack();
             } catch (\Exception $e) {
                 $transaction->rollBack();
 
                 throw $e;
             }
-
         } else {
             $model->loadDefaultValues();
         }
@@ -127,31 +125,17 @@ class TurvesController extends _MainController
         if ($this->request->isPost) {
 
             $transaction = Yii::$app->db->beginTransaction();
-            
             try {
-
                 if ($model->load($this->request->post())) {
-
-                    if (!$model->validate()) {
-                        throw new \InvalidArgumentException();
-                    }
 
                     if (!$model->save()) {
                         throw new CannotSaveException($model);
                     }
 
-                } else {
-                    throw new \InvalidArgumentException();
+                    return $this->redirect(['view', 'nid' => $model->nid]);
                 }
-                
+
                 $transaction->commit();
-
-                return $this->redirect(['view', 'nid' => $model->nid]);
-            
-            } catch (\InvalidArgumentException $e) {
-                        
-                $transaction->rollBack();
-
             } catch (\Exception $e) {
                 $transaction->rollBack();
 
@@ -161,6 +145,67 @@ class TurvesController extends _MainController
 
         return $this->render('update', [
             'model' => $model,
+        ]);
+    }
+
+    public function actionUploadImage() {
+        $model = $this->findModel($this->request->post('nid'));
+
+        if (!isset($_FILES['file'])) return $this->asJson(['success' => false]);
+
+        $uploadedFiles = [];
+        $failedUploads = [];
+        $fileIndicesToUpload = [];
+
+        $uploadDir = Yii::getAlias("@webroot/data/turf/$model->nid");
+
+        try {
+            if (!is_dir($uploadDir)) if (!mkdir($uploadDir)) throw new CannotUploadFileException();
+
+            foreach ($_FILES['file']['tmp_name'] as $index => $tmpName) {
+                $dim = getimagesize($tmpName);
+
+                if (!$dim) {
+                    $failedUploads[] = $_FILES['file']['name'][$index] . ': Invalid file';
+                    continue;
+                } else {
+                    list($width, $height) = $dim;
+                }
+
+                if ($width < 500 || $height < 500) {
+                    $failedUploads[] = $_FILES['file']['name'][$index] . ': Must 500x500 atleast';
+                    continue;
+                }
+
+                if ($_FILES['file']['size'][$index] > 10485760) {
+                    $failedUploads[] = $_FILES['file']['name'][$index] . ': File too big';
+                    continue;
+                }
+
+                $fileIndicesToUpload[] = $index;
+            }
+
+            foreach ($fileIndicesToUpload as $index) {
+                $ext = pathinfo($_FILES['file']['name'][$index], PATHINFO_EXTENSION);
+                $uploadedFileName = $uploadDir . '/' . $index . '.' . $ext;
+
+                if (move_uploaded_file($_FILES['file']['tmp_name'][$index], $uploadedFileName)) {
+                    $uploadedFiles[] = $uploadedFileName;
+                } else {
+                    $failedUploads[] = $_FILES['file']['name'][$index];
+                }
+            }
+        } catch (\Exception $e) {
+            foreach ($uploadedFiles as $uploadedFile) {
+                unlink($uploadedFile);
+            }
+            
+            throw $e;
+        }
+
+        return $this->asJson([
+            'success' => true,
+            'failedUploads' => $failedUploads
         ]);
     }
 
