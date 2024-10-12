@@ -7,6 +7,7 @@ return [
     'password' => '2762',
     'charset' => 'utf8',
 
+    // Live password w4zbr5gXuaTAQp9
     // Schema cache options (for production environment)
     //'enableSchemaCache' => true,
     //'schemaCacheDuration' => 60,
