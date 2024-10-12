@@ -37,6 +37,7 @@ function selectClassic(options) {
 
             select.val(inputValue);
             select.trigger('change');
+            select.blur();
 
             item.parents(finalOptions.selectSelector)
             .find(finalOptions.valueSelector)

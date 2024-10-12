@@ -36,7 +36,7 @@ if ($model->hasErrors('user_id')) {
 
             <div class="form-group<?= $errorClass ?>">
                 <label for="select-turf" class="input-label-classic">Turf</label>
-                <div id="select-turf" class="select-classic sm:max-w-xs close-on-blur" data-name="user_nid">
+                <div id="select-turf" class="select-classic sm:max-w-xs close-on-blur" data-name="user_nid" tabindex="0">
                     <div class="select-value"><?= is_null($model->turf) ? '' : ($model->turf->name . '<input type="hidden" name="user_nid" value="' . $model->turf->nid . '">') ?></div>
                     <div class="select-options">
                         <?php

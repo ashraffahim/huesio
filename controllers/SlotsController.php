@@ -2,13 +2,15 @@
 
 namespace app\controllers;
 
+use app\components\Util;
 use app\models\databaseObjects\Slot;
-use yii\data\ActiveDataProvider;
 use app\controllers\_MainController;
 use app\models\databaseObjects\Turf;
+use app\models\exceptions\common\CannotSaveException;
 use Yii;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * SlotsController implements the CRUD actions for Slot model.
@@ -65,9 +67,75 @@ class SlotsController extends _MainController
 
         $model = Slot::findAll(['turf_id' => $turf->id]);
 
-        /* if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'nid' => $model->id]);
-        } */
+        if ($this->request->isPost && Util::isFetchRequest()) {
+            $slots = json_decode($this->request->post('slots'));
+
+            $errors = $this->validateSlots($slots);
+
+            if (count($errors) > 0) {
+                $this->response->statusCode = 409;
+                return $this->asJson(['collisions' => $errors]);
+            }
+
+            $transaction = Yii::$app->db->beginTransaction();
+            try {
+                $mappedNid = [];
+
+                // Nids from db
+                foreach ($model as $slot) {
+                    $mappedNid[$slot->nid][0] = $slot;
+                }
+
+                // Nids from front
+                $newSlotsToAdd = [];
+                foreach ($slots as $day) {
+                    foreach ($day as $slot) {
+                        if (isset($slot->backId) && array_key_exists($slot->backId, $mappedNid)) {
+                            $mappedNid[$slot->backId][1] = $slot;
+                        } else {
+                            $newSlotsToAdd[] = $slot;
+                        }
+                    }
+                }
+                
+                // Saving slots
+                foreach ($mappedNid as $slotProduct) {
+                    if (!array_key_exists(1, $slotProduct)) {
+                        $slotProduct[0]->delete();
+                        continue;
+                    }
+
+                    $slotProduct[0]->day = $slotProduct[1]->day;
+                    $slotProduct[0]->start_time = $slotProduct[1]->from;
+                    $slotProduct[0]->end_time = $slotProduct[1]->to;
+                    $slotProduct[0]->is_open = $slotProduct[1]->isOpen;
+
+                    if (!$slotProduct[0]->save()) throw new CannotSaveException($slotProduct[0]);
+                }
+
+                $mappingForFront = [];
+                foreach ($newSlotsToAdd as $slot) {
+                    $newSlot = new Slot();
+                    $newSlot->nid = Util::nanoid(Slot::class);
+                    $newSlot->turf_id = $turf->id;
+                    $newSlot->day = $slot->day;
+                    $newSlot->start_time = $slot->from;
+                    $newSlot->end_time = $slot->to;
+                    $newSlot->is_open = $slot->isOpen;
+
+                    if (!$newSlot->save()) throw new CannotSaveException($newSlot);
+
+                    $mappingForFront[$slot->tempId] = $newSlot->nid;
+                }
+
+                $transaction->commit();
+            } catch (\Exception $e) {
+                $transaction->rollBack();
+                throw $e;
+            }
+
+            return $this->asJson($mappingForFront);
+        }
 
         return $this->render('update', [
             'turf' => $turf,
@@ -105,5 +173,24 @@ class SlotsController extends _MainController
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    /** Returns array of error */
+    private function validateSlots(array $slots): array
+    {
+        $errors = [];
+
+        foreach ($slots as $day) {
+            foreach ($day as $slot) {
+                foreach ($day as $slot2) {
+                    if (($slot->from > $slot2->from) && ($slot->from < $slot2->to)) {
+                        $errors[] = $slot->tempId;
+                        $errors[] = $slot2->tempId;
+                    }
+                }
+            }
+        }
+
+        return $errors;
     }
 }

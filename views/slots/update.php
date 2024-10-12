@@ -41,7 +41,7 @@ $this->registerJs('selectClassic()');
                         <label for="duration" class="input-label-classic">Duration</label>
                         <div class="input-group">
                             <input type="number" id="duration" class="input-classic w-10 text-right">
-                            <div class="select-classic close-on-blur" id="duration-type" data-name="duration_type">
+                            <div class="select-classic close-on-blur" id="duration-type" data-name="duration_type" tabindex="0">
                                 <div class="select-value">hr<input type="hidden" name="duration_type" value="hr"></div>
                                 <div class="select-options">
                                     <a class="select-option" data-value="hr">hr</a>
@@ -55,7 +55,7 @@ $this->registerJs('selectClassic()');
                         <label for="Buffer" class="input-label-classic">Buffer</label>
                         <div class="input-group">
                             <input type="number" id="buffer" class="input-classic w-10 text-right">
-                            <div class="select-classic close-on-blur" id="buffer-type" data-name="buffer_type">
+                            <div class="select-classic close-on-blur" id="buffer-type" data-name="buffer_type" tabindex="0">
                                 <div class="select-value">hr<input type="hidden" name="buffer_type" value="hr"></div>
                                 <div class="select-options">
                                     <a class="select-option" data-value="hr">hr</a>
@@ -75,7 +75,7 @@ $this->registerJs('selectClassic()');
                 </div>
                 <div class="flex items-end">
                     <?= Html::a('Cancel', '/slots', $options = ['class' => 'btn-muted mt-0']) ?>
-                    <?= Html::submitButton('Update', ['class' => 'btn-classic ml-3 mt-0']) ?>
+                    <?= Html::submitButton('Update', ['id' => 'update-slots', 'class' => 'btn-classic ml-3 mt-0']) ?>
                 </div>
             </div>
         </div>
@@ -116,3 +116,18 @@ $this->registerJs('selectClassic()');
     </div>
 
 </div>
+<?php
+$slots = [];
+foreach ($model as $slot) {
+    $slots[$slot->day][] = [
+        'backId' => $slot->nid,
+        'day' => $slot->day,
+        'from' => $slot->start_time,
+        'to' => $slot->end_time,
+        'isOpen' => $slot->is_open,
+    ];
+}
+?>
+<script>
+    let currentSlots = <?= json_encode(array_values($slots)) ?>;
+</script>

@@ -69,7 +69,7 @@ class SiteController extends _MainController
 
         $articles = [];
 
-        $this->layout = 'blank';
+        $this->layout = 'main';
 
         return $this->render('index', [
             'articles' => $articles

@@ -34,8 +34,9 @@ class Slot extends \yii\db\ActiveRecord
     {
         return [
             [['nid', 'turf_id', 'day', 'start_time', 'end_time', 'is_open'], 'required'],
-            [['turf_id', 'day', 'is_open'], 'default', 'value' => null],
-            [['turf_id', 'day', 'is_open'], 'integer'],
+            [['turf_id', 'day'], 'default', 'value' => null],
+            [['turf_id', 'day'], 'integer'],
+            [['is_open'], 'boolean'],
             [['start_time', 'end_time'], 'safe'],
             [['nid'], 'string', 'max' => 21],
             [['nid'], 'unique'],
